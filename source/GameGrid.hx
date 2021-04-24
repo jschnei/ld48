@@ -10,6 +10,8 @@ class GameGrid
 	public var width:Int;
 	public var height:Int;
 
+	public var attachedGrid:Grid;
+
 	public function new(width:Int, height:Int)
 	{
 		this.width = width;
@@ -40,9 +42,26 @@ class GameGrid
 		return tiles[getSquare(x, y)];
 	}
 
-	public function setTile(x:Int, y:Int, value:Int)
+	public function setTile(square:Int, value:Int)
 	{
-		tiles[getSquare(x, y)] = value;
+		var oldValue = tiles[square];
+		tiles[square] = value;
+
+		if (oldValue != 0 && value == 0)
+		{
+			// delete tile
+			attachedGrid.deleteTile(square);
+		}
+		else if (oldValue != 0 && value != 0)
+		{
+			// change color
+			attachedGrid.changeColor(square, value);
+		}
+		else if (oldValue == 0 && value != 0)
+		{
+			// createTile
+			attachedGrid.createTile(square, value);
+		}
 	}
 
 	public function isAdjacent(square1:Int, square2:Int)
@@ -83,14 +102,14 @@ class GameGrid
 			var tile = getTile(column, readRow);
 			if (tile > 0)
 			{
-				setTile(column, row, getTile(column, readRow));
+				setTile(getSquare(column, row), getTile(column, readRow));
 				row--;
 				readRow--;
 			}
 		}
 		while (fillInFromTop && row >= 0)
 		{
-			setTile(column, row, Game.randomTile());
+			setTile(getSquare(column, row), Game.randomTile());
 			row--;
 		}
 	}

@@ -52,38 +52,38 @@ class Game
 		if (L != 3)
 			return false;
 
-		if (!curGrid.isAdjacent(squares[0], squares[1]))
-			return false;
-		if (!curGrid.isAdjacent(squares[1], squares[2]))
-			return false;
-
-		if (!(squares[0] == squares[2]))
-			return false;
-
 		for (square in squares)
 		{
 			if (curGrid.tiles[square] == 0)
 				return false;
 		}
+
+		if (curGrid.tiles[squares[0]] != curGrid.tiles[squares[2]])
+		{
+			return false;
+		}
+
 		// passed checks
 		var deletedTile = curGrid.tiles[squares[1]];
 
-		curGrid.tiles[squares[1]] = 0;
-		curGrid.tiles[squares[0]] = randomTile();
-		curGrid.tiles[squares[2]] = randomTile();
+		curGrid.setTile(squares[1], 0);
+		curGrid.setTile(squares[0], randomTile());
+		curGrid.setTile(squares[2], randomTile());
 
 		// move tiles to next grid
 		if (gridId + 1 < grids.length)
 		{
 			var nxtGrid = grids[gridId + 1];
-			nxtGrid.tiles[squares[1]] = curGrid.tiles[squares[1]];
+			nxtGrid.setTile(squares[1], deletedTile);
 		}
 
 		return true;
 	}
 
-	public function addTileToPath(square:Int):Void {
-		if (currentPath.length == 0) {
+	public function addTileToPath(square:Int):Void
+	{
+		if (currentPath.length == 0)
+		{
 			currentPath.push(square);
 			trace(currentPath);
 			return;
@@ -91,14 +91,15 @@ class Game
 		// Check that the square already isn't in the path and is adjacent to the last one.
 		if (currentPath.indexOf(square) != -1)
 			return;
-		if (!grids[activeGrid].isAdjacent(square, currentPath[currentPath.length-1]))
+		if (!grids[activeGrid].isAdjacent(square, currentPath[currentPath.length - 1]))
 			return;
 		currentPath.push(square);
 		trace(currentPath);
 	}
 
-	public function submitPath():Void {
-		doMove(currentPath, activeGrid);
+	public function submitPath():Void
+	{
+		trace("Move:", doMove(currentPath, activeGrid));
 		currentPath.resize(0);
 	}
 }

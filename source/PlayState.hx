@@ -14,7 +14,9 @@ class PlayState extends FlxState
 		_game = new Game(7, 10);
 
 		_topGrid = Grid.fromGame(_game, 25, 25, 0);
+		_topGrid.parentState = this;
 		_bottomGrid = Grid.fromGame(_game, 25, 425, 1);
+		_bottomGrid.parentState = this;
 
 		addGrid(_topGrid);
 		addGrid(_bottomGrid);
@@ -44,7 +46,8 @@ class PlayState extends FlxState
 	{
 		for (gridTile in grid.gridTiles)
 		{
-			add(gridTile);
+			if (gridTile != null)
+				add(gridTile);
 		}
 		add(grid);
 	}

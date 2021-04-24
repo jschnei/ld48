@@ -20,7 +20,7 @@ class GridTile extends FlxSprite
 	public var gridX:Int;
 	public var gridY:Int;
 
-	public function new(grid:Grid, gridX:Int, gridY:Int, type:Int)
+	public function new(grid:Grid, gridX:Int, gridY:Int, colorId:Int)
 	{
 		this.grid = grid;
 		this.gridX = gridX;
@@ -30,7 +30,11 @@ class GridTile extends FlxSprite
 		var Y = grid.y + Grid.CELL_HEIGHT * gridY;
 
 		super(X, Y);
-		loadGraphic(tileColors[type],false,Grid.CELL_WIDTH,Grid.CELL_HEIGHT);
-        
+		loadGraphic(tileColors[colorId], false, Grid.CELL_WIDTH, Grid.CELL_HEIGHT);
+	}
+
+	public function changeColorTo(colorId:Int)
+	{
+		loadGraphic(tileColors[colorId], false, Grid.CELL_WIDTH, Grid.CELL_HEIGHT);
 	}
 }
