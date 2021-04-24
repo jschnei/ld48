@@ -15,15 +15,12 @@ class Grid extends FlxSprite
 
 	public var gridTiles:Array<GridTile>;
 
-	// public var gridObjects:Array<GridObject>;
-
 	public function new(width:Int, height:Int, ?X:Float = 0, ?Y:Float = 0)
 	{
 		gridWidth = width;
 		gridHeight = height;
 
 		gridTiles = new Array<GridTile>();
-		// gridObjects = new Array<GridObject>();
 
 		super(X, Y);
 		makeGraphic(gridWidth * CELL_WIDTH + 1, gridHeight * CELL_HEIGHT + 1, FlxColor.TRANSPARENT, true);
