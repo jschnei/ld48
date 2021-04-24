@@ -82,7 +82,7 @@ class PlayState extends FlxState
 
 		_game.activeGrid = gridId;
 		activeGrid = Grid.fromGame(_game, 25, 25, gridId);
-		nextGrid = Grid.fromGame(_game, 25, 425, gridId + 1);
+		nextGrid = Grid.fromGame(_game, 25, 425, gridId + 1, 0.75);
 
 		add(activeGrid);
 		add(nextGrid);

@@ -26,11 +26,16 @@ class GridTile extends FlxSprite
 		this.gridX = gridX;
 		this.gridY = gridY;
 
-		var X = Grid.CELL_WIDTH * gridX;
-		var Y = Grid.CELL_HEIGHT * gridY;
+		var X = grid.cellWidth * gridX;
+		var Y = grid.cellHeight * gridY;
 
 		super(X, Y);
 		loadGraphic(tileColors[colorId], false, Grid.CELL_WIDTH, Grid.CELL_HEIGHT);
+		scale.set(grid.gridScale, grid.gridScale);
+
+		// hacky method of reorienting point since setting origin doesn't seem to work
+		x = X - (1 - grid.gridScale) * width / 2;
+		y = Y - (1 - grid.gridScale) * height / 2;
 	}
 
 	public function changeColorTo(colorId:Int)
@@ -38,10 +43,14 @@ class GridTile extends FlxSprite
 		loadGraphic(tileColors[colorId], false, Grid.CELL_WIDTH, Grid.CELL_HEIGHT);
 	}
 
-	public function setHighlighted(highlighted:Bool) {
-		if (highlighted) {
+	public function setHighlighted(highlighted:Bool)
+	{
+		if (highlighted)
+		{
 			this.alpha = 0.7;
-		} else {
+		}
+		else
+		{
 			this.alpha = 1.0;
 		}
 	}

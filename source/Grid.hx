@@ -16,27 +16,35 @@ class Grid extends FlxSpriteGroup
 	public var gridHeight:Int;
 	public var gridWidth:Int;
 
+	public var gridScale:Float;
+	public var cellWidth:Float;
+	public var cellHeight:Float;
+
 	public var gameId:Int;
 
 	public var gridBase:GridBase;
 	public var gridTiles:Vector<GridTile>;
 
-	public function new(width:Int, height:Int, ?X:Float = 0, ?Y:Float = 0)
+	public function new(width:Int, height:Int, ?X:Float = 0, ?Y:Float = 0, ?scale:Float = 1)
 	{
 		gridWidth = width;
 		gridHeight = height;
+
+		gridScale = scale;
+		cellWidth = CELL_WIDTH * scale;
+		cellHeight = CELL_HEIGHT * scale;
 
 		gridTiles = new Vector<GridTile>(width * height);
 
 		super(X, Y);
 
-		gridBase = new GridBase(width, height);
+		gridBase = new GridBase(width, height, scale);
 		add(gridBase);
 	}
 
-	public static function fromGame(game:Game, offsetX:Int, offsetY:Int, gridId:Int):Grid
+	public static function fromGame(game:Game, offsetX:Int, offsetY:Int, gridId:Int, ?gridScale:Float = 1.0):Grid
 	{
-		var grid = new Grid(game.width, game.height, offsetX, offsetY);
+		var grid = new Grid(game.width, game.height, offsetX, offsetY, gridScale);
 		grid.gameId = gridId;
 		game.grids[gridId].attachedGrid = grid;
 
@@ -59,8 +67,8 @@ class Grid extends FlxSpriteGroup
 
 	public function getSquare(dx:Float, dy:Float):Int
 	{
-		var x:Int = Math.floor((dx - this.x) / CELL_WIDTH);
-		var y:Int = Math.floor((dy - this.y) / CELL_HEIGHT);
+		var x:Int = Math.floor((dx - this.x) / cellWidth);
+		var y:Int = Math.floor((dy - this.y) / cellHeight);
 
 		if (x < 0 || x >= gridWidth || y < 0 || y >= gridHeight)
 			return -1;
@@ -70,8 +78,8 @@ class Grid extends FlxSpriteGroup
 	public function getCorner(square:Int):FlxPoint
 	{
 		var corner:FlxPoint = new FlxPoint();
-		corner.x = x + (square % gridWidth) * CELL_WIDTH;
-		corner.y = y + Std.int(square / gridWidth) * CELL_HEIGHT;
+		corner.x = x + (square % gridWidth) * cellWidth * gridScale;
+		corner.y = y + Std.int(square / gridWidth) * cellHeight * gridScale;
 
 		return corner;
 	}
@@ -106,7 +114,7 @@ class Grid extends FlxSpriteGroup
 
 class GridBase extends FlxSprite
 {
-	public function new(width:Int, height:Int)
+	public function new(width:Int, height:Int, gridScale:Float)
 	{
 		super(0, 0);
 		makeGraphic(width * Grid.CELL_WIDTH + 1, height * Grid.CELL_HEIGHT + 1, FlxColor.TRANSPARENT, true);
@@ -119,5 +127,7 @@ class GridBase extends FlxSprite
 		{
 			FlxSpriteUtil.drawLine(this, 0, y * Grid.CELL_HEIGHT, width * Grid.CELL_WIDTH, y * Grid.CELL_HEIGHT, {color: 0x3fffffff, thickness: 3});
 		}
+		origin.set(0, 0);
+		scale.set(gridScale, gridScale);
 	}
 }
