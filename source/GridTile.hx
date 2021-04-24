@@ -14,7 +14,8 @@ class GridTile extends FlxSprite
 		AssetPaths.yellow__png,
 		AssetPaths.green__png,
 		AssetPaths.blue__png,
-		AssetPaths.grey__png,
+		AssetPaths.purple__png,
+        AssetPaths.teal__png
 	];
 
 	public var grid:Grid;
