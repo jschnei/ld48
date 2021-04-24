@@ -13,6 +13,7 @@ class Game
 	public var grids:Array<GameGrid>;
 
 	public var currentPath:Array<Int>;
+	public var score = 0;
 
 	public function new(width:Int, height:Int)
 	{
@@ -64,6 +65,7 @@ class Game
 		}
 
 		// passed checks
+		score += Std.int(Math.pow(4, gridId));
 		var deletedTile = curGrid.tiles[squares[1]];
 
 		curGrid.setTile(squares[1], 0);

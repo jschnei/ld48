@@ -2,12 +2,15 @@ package;
 
 import flixel.FlxG;
 import flixel.FlxState;
+import flixel.text.FlxText;
 
 class PlayState extends FlxState
 {
 	private var _topGrid:Grid;
 	private var _bottomGrid:Grid;
 	private var _game:Game;
+
+	private var _scoreText:FlxText;
 
 	override public function create()
 	{
@@ -17,9 +20,12 @@ class PlayState extends FlxState
 		_topGrid.parentState = this;
 		_bottomGrid = Grid.fromGame(_game, 25, 425, 1);
 		_bottomGrid.parentState = this;
+		_scoreText = new FlxText(260, 50);
+		_scoreText.size = 18;
 
 		add(_topGrid);
 		add(_bottomGrid);
+		add(_scoreText);
 
 		super.create();
 	}
@@ -38,7 +44,7 @@ class PlayState extends FlxState
 		{
 			_game.submitPath();
 		}
-
+		_scoreText.text = "Score: " + _game.score;
 		super.update(elapsed);
 	}
 
