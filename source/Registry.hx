@@ -10,4 +10,6 @@ class Registry
 	public static var REGENERATE_TILES:Bool = true;
 
 	public static var TIME_LIMIT:Float = 120;
+	
+	public static var score:Int = 0;
 }

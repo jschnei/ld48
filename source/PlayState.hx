@@ -60,14 +60,17 @@ class PlayState extends FlxState
 			decrementActiveId();
 		}
 
-		_hud.setScore(_game.score);
-		var timeElapsed:Float = Date.now().getTime() / 1000 - timeStart;
+		_hud.setScore(Registry.score);
+		var timeElapsed:Float = Date.now().getTime()/1000 - timeStart;
 		_hud.setTimeLeft(Registry.TIME_LIMIT - timeElapsed);
+		if (timeElapsed > Registry.TIME_LIMIT) {
+			FlxG.switchState(new EndState());
+		}
 
-        if (FlxG.keys.justPressed.R)
-        {
-            reset();
-        }
+		if (FlxG.keys.justPressed.R)
+		{
+			reset();
+		}
 
 		super.update(elapsed);
 	}
