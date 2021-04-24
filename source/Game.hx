@@ -9,7 +9,10 @@ class Game
 	public static var numColors:Int = 5;
 	public static var rand:FlxRandom;
 
+	public var activeGrid:Int = 0;
 	public var grids:Array<GameGrid>;
+
+	public var currentPath:Array<Int>;
 
 	public function new(width:Int, height:Int)
 	{
@@ -20,8 +23,11 @@ class Game
 
 		grids = new Array<GameGrid>();
 		grids.push(new GameGrid(width, height));
+
 		grids[0].randomizeTiles();
 		grids.push(new GameGrid(width, height));
+
+		currentPath = new Array<Int>();
 	}
 
 	public static function randomTile():Int
@@ -51,7 +57,7 @@ class Game
 		if (!curGrid.isAdjacent(squares[1], squares[2]))
 			return false;
 
-		if (squares[0] == squares[2])
+		if (!(squares[0] == squares[2]))
 			return false;
 
 		for (square in squares)
@@ -59,7 +65,6 @@ class Game
 			if (curGrid.tiles[square] == 0)
 				return false;
 		}
-
 		// passed checks
 		var deletedTile = curGrid.tiles[squares[1]];
 
@@ -75,5 +80,25 @@ class Game
 		}
 
 		return true;
+	}
+
+	public function addTileToPath(square:Int):Void {
+		if (currentPath.length == 0) {
+			currentPath.push(square);
+			trace(currentPath);
+			return;
+		}
+		// Check that the square already isn't in the path and is adjacent to the last one.
+		if (currentPath.indexOf(square) != -1)
+			return;
+		if (!grids[activeGrid].isAdjacent(square, currentPath[currentPath.length-1]))
+			return;
+		currentPath.push(square);
+		trace(currentPath);
+	}
+
+	public function submitPath():Void {
+		doMove(currentPath, activeGrid);
+		currentPath.resize(0);
 	}
 }

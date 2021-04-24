@@ -56,8 +56,8 @@ class Grid extends FlxSprite
 
 	public function getSquare(dx:Float, dy:Float):Int
 	{
-		var x:Int = Math.floor(dx / CELL_WIDTH);
-		var y:Int = Math.floor(dy / CELL_HEIGHT);
+		var x:Int = Math.floor((dx - this.x) / CELL_WIDTH);
+		var y:Int = Math.floor((dy - this.y) / CELL_HEIGHT);
 
 		if (x < 0 || x >= gridWidth || y < 0 || y >= gridHeight)
 			return -1;

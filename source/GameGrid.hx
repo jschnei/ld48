@@ -48,10 +48,10 @@ class GameGrid
 	public function isAdjacent(square1:Int, square2:Int)
 	{
 		var x1 = square1 % width;
-		var y1 = square1 / width;
+		var y1 = Std.int(square1 / width);
 
 		var x2 = square2 % width;
-		var y2 = square2 / width;
+		var y2 = Std.int(square2 / width);
 
 		var dx = x1 - x2;
 		if (dx < 0)
@@ -59,7 +59,6 @@ class GameGrid
 		var dy = y1 - y2;
 		if (dy < 0)
 			dy *= -1;
-
 		return (dx + dy == 1);
 	}
 
