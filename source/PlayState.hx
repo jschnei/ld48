@@ -24,13 +24,16 @@ class PlayState extends FlxState
 
 	override public function update(elapsed:Float)
 	{
-		if (FlxG.mouse.pressed) {
-			var hoveringTile = _grid.getSquare(FlxG.mouse.x, FlxG.mouse.y);
-			if (hoveringTile != -1) {
+		if (FlxG.mouse.pressed)
+		{
+			var hoveringTile = _topGrid.getSquare(FlxG.mouse.x, FlxG.mouse.y);
+			if (hoveringTile != -1)
+			{
 				_game.addTileToPath(hoveringTile);
 			}
 		}
-		if (FlxG.mouse.justReleased) {
+		if (FlxG.mouse.justReleased)
+		{
 			_game.submitPath();
 		}
 

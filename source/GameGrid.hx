@@ -42,7 +42,7 @@ class GameGrid
 
 	public function setTile(x:Int, y:Int, value:Int)
 	{
-		tiles[getSquare(x,y)] = value;
+		tiles[getSquare(x, y)] = value;
 	}
 
 	public function isAdjacent(square1:Int, square2:Int)
@@ -72,8 +72,8 @@ class GameGrid
 
 	public function doGravityForColumn(column:Int, fillInFromTop:Bool)
 	{
-		var readRow = height-1;
-		var row = height-1;
+		var readRow = height - 1;
+		var row = height - 1;
 		while (readRow >= 0)
 		{
 			while (readRow >= 0 && getTile(column, readRow) == 0)
@@ -88,7 +88,7 @@ class GameGrid
 				readRow--;
 			}
 		}
-		while (fillInFromTop && row >=0)
+		while (fillInFromTop && row >= 0)
 		{
 			setTile(column, row, Game.randomTile());
 			row--;
