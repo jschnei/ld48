@@ -3,15 +3,13 @@ import haxe.ds.Vector;
 
 class Game
 {
-	// 0 = empty square
-	// positive numbers are colors
-	public var tiles:Vector<Int>;
-
 	public var width:Int;
 	public var height:Int;
-	public var numColors:Int = 5;
 
-	public var rand:FlxRandom;
+	public static var numColors:Int = 5;
+	public static var rand:FlxRandom;
+
+	public var grids:Array<GameGrid>;
 
 	public function new(width:Int, height:Int)
 	{
@@ -20,71 +18,53 @@ class Game
 		this.width = width;
 		this.height = height;
 
-		tiles = new Vector<Int>(width * height);
-
-		for (i in 0...(width * height))
-		{
-			tiles[i] = randomTile();
-		}
+		grids = new Array<GameGrid>();
+		grids.push(new GameGrid(width, height));
 	}
 
-	public function randomTile():Int
+	public static function randomTile():Int
 	{
 		return rand.int(1, numColors);
 	}
 
-	public function getSquare(x:Int, y:Int):Int
+	public function getTile(x:Int, y:Int, gridId:Int):Int
 	{
-		return y * width + x;
+		var grid = grids[gridId];
+		return grid.tiles[grid.getSquare(x, y)];
 	}
 
-	public function getTile(x:Int, y:Int):Int
+	public function doMove(squares:Array<Int>, gridId:Int):Bool
 	{
-		return tiles[getSquare(x, y)];
-	}
+		if (gridId < 0 || gridId >= grids.length)
+			return false;
 
-	public function isAdjacent(square1:Int, square2:Int)
-	{
-		var x1 = square1 % width;
-		var y1 = square1 / width;
-
-		var x2 = square2 % width;
-		var y2 = square2 / width;
-
-		var dx = x1 - x2;
-		if (dx < 0)
-			dx *= -1;
-		var dy = y1 - y2;
-		if (dy < 0)
-			dy *= -1;
-
-		return (dx + dy == 1);
-	}
-
-	public function doMove(squares:Array<Int>):Bool
-	{
+		var curGrid = grids[gridId];
 		var L = squares.length;
 
 		if (L != 3)
 			return false;
 
-		if (!isAdjacent(squares[0], squares[1]))
+		if (!curGrid.isAdjacent(squares[0], squares[1]))
 			return false;
-		if (!isAdjacent(squares[1], squares[2]))
+		if (!curGrid.isAdjacent(squares[1], squares[2]))
 			return false;
 
 		if (squares[0] == squares[2])
 			return false;
 
-		if (tiles[squares[0]] == 0 || tiles[squares[1]] == 0 || tiles[squares[2]] == 0)
+		for (square in squares)
 		{
-			return false;
+			if (curGrid.tiles[square] == 0)
+				return false;
 		}
 
 		// passed checks
-		tiles[squares[1]] = 0;
-		tiles[squares[0]] = randomTile();
-		tiles[squares[2]] = randomTile();
+		curGrid.tiles[squares[1]] = 0;
+		curGrid.tiles[squares[0]] = randomTile();
+		curGrid.tiles[squares[2]] = randomTile();
+
+		// move tiles to next grid
+		// TODO
 
 		return true;
 	}

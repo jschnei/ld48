@@ -13,6 +13,8 @@ class Grid extends FlxSprite
 	public var gridHeight:Int;
 	public var gridWidth:Int;
 
+	public var gameId:Int;
+
 	public var gridTiles:Array<GridTile>;
 
 	public function new(width:Int, height:Int, ?X:Float = 0, ?Y:Float = 0)
@@ -35,18 +37,20 @@ class Grid extends FlxSprite
 		}
 	}
 
-	public static function fromGame(game:Game, offsetX:Int, offsetY:Int):Grid
+	public static function fromGame(game:Game, offsetX:Int, offsetY:Int, gridId:Int):Grid
 	{
 		var grid = new Grid(game.width, game.height, offsetX, offsetY);
+		grid.gameId = gridId;
 
 		for (y in 0...game.height)
 		{
 			for (x in 0...game.width)
 			{
-				var tile = new GridTile(grid, x, y, game.getTile(x, y));
+				var tile = new GridTile(grid, x, y, game.getTile(x, y, gridId));
 				grid.gridTiles.push(tile);
 			}
 		}
+
 		return grid;
 	}
 

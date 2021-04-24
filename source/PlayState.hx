@@ -13,7 +13,7 @@ class PlayState extends FlxState
 		// add(_player);
 		_game = new Game(7, 10);
 
-		_grid = Grid.fromGame(_game, 25, 25);
+		_grid = Grid.fromGame(_game, 25, 25, 0);
 		for (gridTile in _grid.gridTiles)
 		{
 			add(gridTile);
