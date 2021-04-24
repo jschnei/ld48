@@ -5,7 +5,6 @@ class Game
 {
 	public var width:Int;
 	public var height:Int;
-	public var numGrids:Int;
 
 	public static var numColors:Int = 5;
 	public static var rand:FlxRandom;
@@ -16,20 +15,20 @@ class Game
 	public var currentPath:Array<Int>;
 	public var score = 0;
 
-	public function new(width:Int, height:Int, numGrids:Int)
+	public function new(width:Int, height:Int)
 	{
 		rand = new FlxRandom(Std.int(Date.now().getTime() / 1000));
 
 		this.width = width;
 		this.height = height;
-		this.numGrids = numGrids;
 
 		grids = new Array<GameGrid>();
-		for (i in 0...numGrids)
-		{
-			grids.push(new GameGrid(width, height));
-		}
+		// start with 2 grids
+		grids.push(new GameGrid(width, height));
+		grids.push(new GameGrid(width, height));
+
 		grids[0].randomizeTiles();
+		grids[0].activated = true;
 
 		currentPath = new Array<Int>();
 	}
@@ -82,6 +81,12 @@ class Game
 			var nxtGrid = grids[gridId + 1];
 			var nxtSquare = nxtGrid.moveToTop(squares[1]);
 
+			if (!nxtGrid.activated)
+			{
+				grids.push(new GameGrid(width, height));
+				nxtGrid.activated = true;
+			}
+
 			if (nxtGrid.tiles[nxtSquare] == 0)
 			{
 				nxtGrid.setTile(nxtSquare, deletedTile);
@@ -132,7 +137,7 @@ class Game
 	{
 		grids[activeGrid].attachedGrid = null;
 
-		if (activeGrid + 1 < numGrids)
+		if (activeGrid + 1 < grids.length)
 			grids[activeGrid + 1].attachedGrid = null;
 	}
 }

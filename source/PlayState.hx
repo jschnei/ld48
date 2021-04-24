@@ -14,7 +14,7 @@ class PlayState extends FlxState
 
 	override public function create()
 	{
-		_game = new Game(7, 10, 5);
+		_game = new Game(7, 10);
 		switchActiveId(0);
 
 		_scoreText = new FlxText(260, 50);
@@ -56,7 +56,7 @@ class PlayState extends FlxState
 	public function incrementActiveId()
 	{
 		var curId = _game.activeGrid;
-		if (curId + 2 < _game.numGrids)
+		if (curId + 2 < _game.grids.length)
 		{
 			switchActiveId(curId + 1);
 		}

@@ -11,6 +11,7 @@ class GameGrid
 	public var height:Int;
 
 	public var attachedGrid:Grid;
+	public var activated:Bool = false;
 
 	public function new(width:Int, height:Int)
 	{
