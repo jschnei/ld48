@@ -14,16 +14,15 @@ class PlayState extends FlxState
 	private var _game:Game;
 	private var _hud:HUD;
 
-	private var TIME_LIMIT:Float = 120;
 	private var timeStart:Float;
 
 	override public function create()
 	{
 		_game = new Game(Registry.GAME_WIDTH, Registry.GAME_HEIGHT);
 		switchActiveId(0);
-		timeStart = Date.now().getTime()/1000;
+		timeStart = Date.now().getTime() / 1000;
 
-		_hud = new HUD(TIME_LIMIT, 260, 50);
+		_hud = new HUD(Registry.TIME_LIMIT, 260, 50);
 		add(_hud);
 
 		super.create();
@@ -62,8 +61,8 @@ class PlayState extends FlxState
 		}
 
 		_hud.setScore(_game.score);
-		var timeElapsed:Float = Date.now().getTime()/1000 - timeStart;
-		_hud.setTimeLeft(TIME_LIMIT - timeElapsed);
+		var timeElapsed:Float = Date.now().getTime() / 1000 - timeStart;
+		_hud.setTimeLeft(Registry.TIME_LIMIT - timeElapsed);
 
         if (FlxG.keys.justPressed.R)
         {

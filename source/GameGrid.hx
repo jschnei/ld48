@@ -13,6 +13,9 @@ class GameGrid
 	public var attachedGrid:Grid;
 	public var activated:Bool = false;
 
+	// whether the grid regenerates new blocks from the top
+	public var isRegenerating:Bool = false;
+
 	public function new(width:Int, height:Int)
 	{
 		this.width = width;
@@ -94,15 +97,15 @@ class GameGrid
 		return (dx + dy == 1);
 	}
 
-	public function doGravity(fillInFromTop:Bool)
+	public function doGravity()
 	{
 		for (i in 0...width)
 		{
-			doGravityForColumn(i, fillInFromTop);
+			doGravityForColumn(i);
 		}
 	}
 
-	public function doGravityForColumn(column:Int, fillInFromTop:Bool)
+	public function doGravityForColumn(column:Int)
 	{
 		var readRow = height - 1;
 		var row = height - 1;
@@ -123,7 +126,7 @@ class GameGrid
 		while (row >= 0)
 		{
 			var tile = 0;
-			if (fillInFromTop)
+			if (isRegenerating)
 			{
 				tile = Game.randomTile();
 			}
