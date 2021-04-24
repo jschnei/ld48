@@ -29,6 +29,14 @@ class PlayState extends FlxState
 		super.create();
 	}
 
+    public function reset()
+        {
+            _game = new Game(Registry.GAME_WIDTH, Registry.GAME_HEIGHT);
+            switchActiveId(0);
+            timeStart = Date.now().getTime()/1000;
+            super.create();
+    }
+
 	override public function update(elapsed:Float)
 	{
 		if (FlxG.mouse.pressed)
@@ -56,6 +64,11 @@ class PlayState extends FlxState
 		_hud.setScore(_game.score);
 		var timeElapsed:Float = Date.now().getTime()/1000 - timeStart;
 		_hud.setTimeLeft(TIME_LIMIT - timeElapsed);
+
+        if (FlxG.keys.justPressed.R)
+        {
+            reset();
+        }
 
 		super.update(elapsed);
 	}
