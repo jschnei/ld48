@@ -56,20 +56,23 @@ class GameGrid
 		var oldValue = tiles[square];
 		tiles[square] = value;
 
-		if (oldValue != 0 && value == 0)
+		if (attachedGrid != null)
 		{
-			// delete tile
-			attachedGrid.deleteTile(square);
-		}
-		else if (oldValue != 0 && value != 0)
-		{
-			// change color
-			attachedGrid.changeColor(square, value);
-		}
-		else if (oldValue == 0 && value != 0)
-		{
-			// createTile
-			attachedGrid.createTile(square, value);
+			if (oldValue != 0 && value == 0)
+			{
+				// delete tile
+				attachedGrid.deleteTile(square);
+			}
+			else if (oldValue != 0 && value != 0)
+			{
+				// change color
+				attachedGrid.changeColor(square, value);
+			}
+			else if (oldValue == 0 && value != 0)
+			{
+				// createTile
+				attachedGrid.createTile(square, value);
+			}
 		}
 	}
 

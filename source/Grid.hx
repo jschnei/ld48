@@ -21,9 +21,6 @@ class Grid extends FlxSpriteGroup
 	public var gridBase:GridBase;
 	public var gridTiles:Vector<GridTile>;
 
-	// TODO: turn Grid into an FlxSpriteGroup so we don't need to do this?
-	public var parentState:FlxState;
-
 	public function new(width:Int, height:Int, ?X:Float = 0, ?Y:Float = 0)
 	{
 		gridWidth = width;

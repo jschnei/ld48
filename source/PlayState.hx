@@ -6,25 +6,19 @@ import flixel.text.FlxText;
 
 class PlayState extends FlxState
 {
-	private var _topGrid:Grid;
-	private var _bottomGrid:Grid;
+	private var activeGrid:Grid;
+	private var nextGrid:Grid;
 	private var _game:Game;
 
 	private var _scoreText:FlxText;
 
 	override public function create()
 	{
-		_game = new Game(7, 10);
+		_game = new Game(7, 10, 5);
+		switchActiveId(0);
 
-		_topGrid = Grid.fromGame(_game, 25, 25, 0);
-		_topGrid.parentState = this;
-		_bottomGrid = Grid.fromGame(_game, 25, 425, 1);
-		_bottomGrid.parentState = this;
 		_scoreText = new FlxText(260, 50);
 		_scoreText.size = 18;
-
-		add(_topGrid);
-		add(_bottomGrid);
 		add(_scoreText);
 
 		super.create();
@@ -34,7 +28,7 @@ class PlayState extends FlxState
 	{
 		if (FlxG.mouse.pressed)
 		{
-			var hoveringTile = _topGrid.getSquare(FlxG.mouse.x, FlxG.mouse.y);
+			var hoveringTile = activeGrid.getSquare(FlxG.mouse.x, FlxG.mouse.y);
 			if (hoveringTile != -1)
 			{
 				_game.hoverOnTile(hoveringTile);
@@ -45,16 +39,52 @@ class PlayState extends FlxState
 			_game.submitPath();
 		}
 		_scoreText.text = "Score: " + _game.score;
+
+		if (FlxG.keys.justPressed.DOWN)
+		{
+			incrementActiveId();
+		}
+
+		if (FlxG.keys.justPressed.UP)
+		{
+			decrementActiveId();
+		}
+
 		super.update(elapsed);
 	}
 
-	public function addGrid(grid:Grid)
+	public function incrementActiveId()
 	{
-		for (gridTile in grid.gridTiles)
+		var curId = _game.activeGrid;
+		if (curId + 1 < _game.numGrids)
 		{
-			if (gridTile != null)
-				add(gridTile);
+			switchActiveId(curId + 1);
 		}
-		add(grid);
+	}
+
+	public function decrementActiveId()
+	{
+		var curId = _game.activeGrid;
+		if (curId - 1 >= 0)
+		{
+			switchActiveId(curId - 1);
+		}
+	}
+
+	public function switchActiveId(gridId:Int)
+	{
+		if (activeGrid != null)
+		{
+			_game.detachGrids();
+			remove(activeGrid);
+			remove(nextGrid);
+		}
+
+		_game.activeGrid = gridId;
+		activeGrid = Grid.fromGame(_game, 25, 25, gridId);
+		nextGrid = Grid.fromGame(_game, 25, 425, gridId + 1);
+
+		add(activeGrid);
+		add(nextGrid);
 	}
 }

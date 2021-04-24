@@ -5,6 +5,7 @@ class Game
 {
 	public var width:Int;
 	public var height:Int;
+	public var numGrids:Int;
 
 	public static var numColors:Int = 5;
 	public static var rand:FlxRandom;
@@ -15,18 +16,20 @@ class Game
 	public var currentPath:Array<Int>;
 	public var score = 0;
 
-	public function new(width:Int, height:Int)
+	public function new(width:Int, height:Int, numGrids:Int)
 	{
 		rand = new FlxRandom(Std.int(Date.now().getTime() / 1000));
 
 		this.width = width;
 		this.height = height;
+		this.numGrids = numGrids;
 
 		grids = new Array<GameGrid>();
-		grids.push(new GameGrid(width, height));
-
+		for (i in 0...numGrids)
+		{
+			grids.push(new GameGrid(width, height));
+		}
 		grids[0].randomizeTiles();
-		grids.push(new GameGrid(width, height));
 
 		currentPath = new Array<Int>();
 	}
@@ -110,15 +113,26 @@ class Game
 		clearPath();
 	}
 
-	public function addTileToPath(square:Int):Void {
+	public function addTileToPath(square:Int):Void
+	{
 		currentPath.push(square);
 		grids[activeGrid].attachedGrid.setTileHighlight(square, true);
 	}
 
-	public function clearPath():Void {
-		for (square in currentPath) {
-			grids[activeGrid].attachedGrid.setTileHighlight(square, false);	
+	public function clearPath():Void
+	{
+		for (square in currentPath)
+		{
+			grids[activeGrid].attachedGrid.setTileHighlight(square, false);
 		}
 		currentPath.resize(0);
+	}
+
+	public function detachGrids()
+	{
+		grids[activeGrid].attachedGrid = null;
+
+		if (activeGrid + 1 < numGrids)
+			grids[activeGrid + 1].attachedGrid = null;
 	}
 }
