@@ -13,6 +13,7 @@ class Grid extends FlxSpriteGroup
 	public static var CELL_WIDTH:Int = 32;
 	public static var CELL_HEIGHT:Int = 32;
 
+	// The number of rows and columns, respectively
 	public var gridHeight:Int;
 	public var gridWidth:Int;
 
@@ -36,7 +37,8 @@ class Grid extends FlxSpriteGroup
 
 		gridTiles = new Vector<GridTile>(width * height);
 
-		super(X, Y);
+		var xcoord = X + width * CELL_WIDTH * (1-scale) / 2;
+		super(xcoord, Y);
 
 		gridBase = new GridBase(width, height, scale);
 		add(gridBase);
