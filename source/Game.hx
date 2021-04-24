@@ -60,6 +60,7 @@ class Game
 		// note: only supports moving a single tile right now
 		var moveTile:Int;
 		var recolorTiles:Array<Int>;
+		var recolorOffsets:Array<Int>;
 
 		switch (Registry.GAME_RULE)
 		{
@@ -73,6 +74,7 @@ class Game
 				}
 
 				recolorTiles = [squares[0], squares[2]];
+				recolorOffsets = [-1, 1];
 				moveTile = squares[1];
 			case Registry.GameRule.PALINDROME:
 				if (L != 5)
@@ -89,6 +91,7 @@ class Game
 				}
 
 				recolorTiles = [squares[0], squares[1], squares[3], squares[4]];
+				recolorOffsets = [-1, -1, 1, 1];
 				moveTile = squares[2];
 			default:
 				trace("Unknown rule");
@@ -99,15 +102,14 @@ class Game
 		Registry.score += Std.int(Math.pow(3, gridId));
 		var deletedTile = curGrid.tiles[moveTile];
 
-		for (square in recolorTiles)
+		for (i in (0...recolorTiles.length))
 		{
-			curGrid.setTile(square, randomTile());
+			var square = recolorTiles[i];
+			var offset = recolorOffsets[i];
+			curGrid.cycleTile(square, offset);
 		}
 		curGrid.setTile(moveTile, 0);
 
-		// curGrid.setTile(squares[1], 0);
-		// curGrid.setTile(squares[0], randomTile());
-		// curGrid.setTile(squares[2], randomTile());
 		curGrid.doGravity();
 
 		// move tiles to next grid

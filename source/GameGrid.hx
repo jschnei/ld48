@@ -80,6 +80,16 @@ class GameGrid
 		}
 	}
 
+	public function cycleTile(square:Int, offset:Int)
+	{
+		var curTile = tiles[square];
+		var nextTile = (curTile + offset + Registry.NUM_COLORS) % Registry.NUM_COLORS;
+		if (nextTile == 0)
+			nextTile = Registry.NUM_COLORS;
+
+		setTile(square, nextTile);
+	}
+
 	public function isAdjacent(square1:Int, square2:Int)
 	{
 		var x1 = square1 % width;
