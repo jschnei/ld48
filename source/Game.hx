@@ -28,6 +28,7 @@ class Game
 
 		grids[0].randomizeTiles();
 		grids[0].activated = true;
+		grids[0].isRegenerating = Registry.REGENERATE_TILES;
 
 		currentPath = new Array<Int>();
 	}
@@ -72,7 +73,7 @@ class Game
 		curGrid.setTile(squares[1], 0);
 		curGrid.setTile(squares[0], randomTile());
 		curGrid.setTile(squares[2], randomTile());
-		curGrid.doGravity(false);
+		curGrid.doGravity();
 
 		// move tiles to next grid
 		if (gridId + 1 < grids.length)
@@ -89,7 +90,7 @@ class Game
 			if (nxtGrid.tiles[nxtSquare] == 0)
 			{
 				nxtGrid.setTile(nxtSquare, deletedTile);
-				nxtGrid.doGravity(false);
+				nxtGrid.doGravity();
 			}
 		}
 
