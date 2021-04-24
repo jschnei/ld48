@@ -75,8 +75,13 @@ class Game
 		if (gridId + 1 < grids.length)
 		{
 			var nxtGrid = grids[gridId + 1];
-			nxtGrid.setTile(squares[1], deletedTile);
-			nxtGrid.doGravity(false);
+			var nxtSquare = nxtGrid.moveToTop(squares[1]);
+
+			if (nxtGrid.tiles[nxtSquare] == 0)
+			{
+				nxtGrid.setTile(nxtSquare, deletedTile);
+				nxtGrid.doGravity(false);
+			}
 		}
 
 		return true;

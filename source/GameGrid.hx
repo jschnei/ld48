@@ -37,6 +37,15 @@ class GameGrid
 		return y * width + x;
 	}
 
+	public function moveToTop(square:Int)
+	{
+		while (square >= width)
+		{
+			square -= width;
+		}
+		return square;
+	}
+
 	public function getTile(x:Int, y:Int):Int
 	{
 		return tiles[getSquare(x, y)];
