@@ -2,12 +2,13 @@ package;
 
 import flixel.FlxSprite;
 import flixel.FlxState;
+import flixel.group.FlxSpriteGroup;
 import flixel.math.FlxPoint;
 import flixel.util.FlxColor;
 import flixel.util.FlxSpriteUtil;
 import haxe.ds.Vector;
 
-class Grid extends FlxSprite
+class Grid extends FlxSpriteGroup
 {
 	public static var CELL_WIDTH:Int = 32;
 	public static var CELL_HEIGHT:Int = 32;
@@ -17,6 +18,7 @@ class Grid extends FlxSprite
 
 	public var gameId:Int;
 
+	public var gridBase:GridBase;
 	public var gridTiles:Vector<GridTile>;
 
 	// TODO: turn Grid into an FlxSpriteGroup so we don't need to do this?
@@ -30,16 +32,9 @@ class Grid extends FlxSprite
 		gridTiles = new Vector<GridTile>(width * height);
 
 		super(X, Y);
-		makeGraphic(gridWidth * CELL_WIDTH + 1, gridHeight * CELL_HEIGHT + 1, FlxColor.TRANSPARENT, true);
 
-		for (x in 0...gridWidth + 1)
-		{
-			FlxSpriteUtil.drawLine(this, x * CELL_WIDTH, 0, x * CELL_WIDTH, gridHeight * CELL_HEIGHT, {color: 0x3fffffff, thickness: 3});
-		}
-		for (y in 0...gridHeight + 1)
-		{
-			FlxSpriteUtil.drawLine(this, 0, y * CELL_HEIGHT, gridWidth * CELL_WIDTH, y * CELL_HEIGHT, {color: 0x3fffffff, thickness: 3});
-		}
+		gridBase = new GridBase(width, height);
+		add(gridBase);
 	}
 
 	public static function fromGame(game:Game, offsetX:Int, offsetY:Int, gridId:Int):Grid
@@ -57,6 +52,7 @@ class Grid extends FlxSprite
 				{
 					var gridTile = new GridTile(grid, x, y, tile);
 					grid.gridTiles[y * game.width + x] = gridTile;
+					grid.add(gridTile);
 				}
 			}
 		}
@@ -91,7 +87,7 @@ class Grid extends FlxSprite
 
 	public function deleteTile(square:Int)
 	{
-		parentState.remove(gridTiles[square]);
+		remove(gridTiles[square]);
 		gridTiles[square] = null;
 	}
 
@@ -101,11 +97,30 @@ class Grid extends FlxSprite
 		var y = Std.int(square / gridWidth);
 		var gridTile = new GridTile(this, x, y, colorId);
 		gridTiles[square] = gridTile;
-		parentState.add(gridTile);
+		add(gridTile);
 	}
 
-	public function setTileHighlight(square:Int, highlighted:Bool) {
+	public function setTileHighlight(square:Int, highlighted:Bool)
+	{
 		if (gridTiles[square] != null)
 			gridTiles[square].setHighlighted(highlighted);
+	}
+}
+
+class GridBase extends FlxSprite
+{
+	public function new(width:Int, height:Int)
+	{
+		super(0, 0);
+		makeGraphic(width * Grid.CELL_WIDTH + 1, height * Grid.CELL_HEIGHT + 1, FlxColor.TRANSPARENT, true);
+
+		for (x in 0...width + 1)
+		{
+			FlxSpriteUtil.drawLine(this, x * Grid.CELL_WIDTH, 0, x * Grid.CELL_WIDTH, height * Grid.CELL_HEIGHT, {color: 0x3fffffff, thickness: 3});
+		}
+		for (y in 0...height + 1)
+		{
+			FlxSpriteUtil.drawLine(this, 0, y * Grid.CELL_HEIGHT, width * Grid.CELL_WIDTH, y * Grid.CELL_HEIGHT, {color: 0x3fffffff, thickness: 3});
+		}
 	}
 }

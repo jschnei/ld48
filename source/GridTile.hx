@@ -26,8 +26,8 @@ class GridTile extends FlxSprite
 		this.gridX = gridX;
 		this.gridY = gridY;
 
-		var X = grid.x + Grid.CELL_WIDTH * gridX;
-		var Y = grid.y + Grid.CELL_HEIGHT * gridY;
+		var X = Grid.CELL_WIDTH * gridX;
+		var Y = Grid.CELL_HEIGHT * gridY;
 
 		super(X, Y);
 		loadGraphic(tileColors[colorId], false, Grid.CELL_WIDTH, Grid.CELL_HEIGHT);

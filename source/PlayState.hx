@@ -18,8 +18,8 @@ class PlayState extends FlxState
 		_bottomGrid = Grid.fromGame(_game, 25, 425, 1);
 		_bottomGrid.parentState = this;
 
-		addGrid(_topGrid);
-		addGrid(_bottomGrid);
+		add(_topGrid);
+		add(_bottomGrid);
 
 		super.create();
 	}
