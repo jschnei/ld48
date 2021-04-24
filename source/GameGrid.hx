@@ -85,7 +85,7 @@ class GameGrid
 			{
 				setTile(column, row, getTile(column, readRow));
 				row--;
-				readrow--;
+				readRow--;
 			}
 		}
 		while (fillInFromTop && row >=0)
