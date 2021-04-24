@@ -56,7 +56,7 @@ class PlayState extends FlxState
 	public function incrementActiveId()
 	{
 		var curId = _game.activeGrid;
-		if (curId + 1 < _game.numGrids)
+		if (curId + 2 < _game.numGrids)
 		{
 			switchActiveId(curId + 1);
 		}
