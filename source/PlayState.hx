@@ -18,9 +18,7 @@ class PlayState extends FlxState
 
 	override public function create()
 	{
-		_game = new Game(Registry.GAME_WIDTH, Registry.GAME_HEIGHT);
-		switchActiveId(0);
-		timeStart = Date.now().getTime() / 1000;
+		reset();
 
 		_hud = new HUD(Registry.TIME_LIMIT, 260, 50);
 		add(_hud);
@@ -29,11 +27,11 @@ class PlayState extends FlxState
 	}
 
     public function reset()
-        {
-            _game = new Game(Registry.GAME_WIDTH, Registry.GAME_HEIGHT);
-            switchActiveId(0);
-            timeStart = Date.now().getTime()/1000;
-            super.create();
+    {
+		Registry.score = 0;
+		_game = new Game(Registry.GAME_WIDTH, Registry.GAME_HEIGHT);
+		switchActiveId(0);
+		timeStart = Date.now().getTime()/1000;
     }
 
 	override public function update(elapsed:Float)
