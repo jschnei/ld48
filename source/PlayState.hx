@@ -2,7 +2,6 @@ package;
 
 import flixel.FlxG;
 import flixel.FlxState;
-import flixel.text.FlxText;
 
 class PlayState extends FlxState
 {
@@ -13,17 +12,19 @@ class PlayState extends FlxState
 	private var activeGrid:Grid;
 	private var nextGrid:Grid;
 	private var _game:Game;
+	private var _hud:HUD;
 
-	private var _scoreText:FlxText;
+	private var TIME_LIMIT:Float = 120;
+	private var timeStart:Float;
 
 	override public function create()
 	{
 		_game = new Game(Registry.GAME_WIDTH, Registry.GAME_HEIGHT);
 		switchActiveId(0);
+		timeStart = Date.now().getTime()/1000;
 
-		_scoreText = new FlxText(260, 50);
-		_scoreText.size = 18;
-		add(_scoreText);
+		_hud = new HUD(TIME_LIMIT, 260, 50);
+		add(_hud);
 
 		super.create();
 	}
@@ -42,17 +43,19 @@ class PlayState extends FlxState
 		{
 			_game.submitPath();
 		}
-		_scoreText.text = "Score: " + _game.score;
 
 		if (FlxG.keys.justPressed.DOWN)
 		{
 			incrementActiveId();
 		}
-
 		if (FlxG.keys.justPressed.UP)
 		{
 			decrementActiveId();
 		}
+
+		_hud.setScore(_game.score);
+		var timeElapsed:Float = Date.now().getTime()/1000 - timeStart;
+		_hud.setTimeLeft(TIME_LIMIT - timeElapsed);
 
 		super.update(elapsed);
 	}
