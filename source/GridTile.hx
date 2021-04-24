@@ -8,13 +8,13 @@ import flixel.util.FlxSpriteUtil;
 class GridTile extends FlxSprite
 {
 	public var tileColors:Array<String> = [
-		AssetPaths.grey__png, // no color
+		AssetPaths.grey__png, // not used
 		AssetPaths.red__png,
 		AssetPaths.orange__png,
 		AssetPaths.yellow__png,
 		AssetPaths.green__png,
 		AssetPaths.blue__png,
-		AssetPaths.grey__png, // no color
+		AssetPaths.grey__png,
 	];
 
 	public var grid:Grid;
