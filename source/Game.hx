@@ -104,6 +104,11 @@ class Game
 			addTileToPath(square);
 			return;
 		}
+		// Allow "undo"
+		if (square == currentPath[currentPath.length - 2]) {
+			deleteTileFromPath(currentPath[currentPath.length - 1]);
+			return;
+		}
 		// Check that the square already isn't in the path and is adjacent to the last one.
 		if (currentPath.indexOf(square) != -1)
 			return;
@@ -122,6 +127,12 @@ class Game
 	{
 		currentPath.push(square);
 		grids[activeGrid].attachedGrid.setTileHighlight(square, true);
+	}
+
+	public function deleteTileFromPath(square:Int):Void
+	{
+		currentPath.remove(square);
+		grids[activeGrid].attachedGrid.setTileHighlight(square, false);
 	}
 
 	public function clearPath():Void
