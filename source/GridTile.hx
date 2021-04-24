@@ -7,13 +7,13 @@ import flixel.util.FlxSpriteUtil;
 
 class GridTile extends FlxSprite
 {
-	public var tileColors:Array<FlxColor> = [
-		FlxColor.GRAY, // no color
-		FlxColor.RED,
-		FlxColor.BLUE,
-		FlxColor.YELLOW,
-		FlxColor.GREEN,
-		FlxColor.WHITE
+	public var tileColors:Array<String> = [
+		AssetPaths.grey__png, // no color
+		AssetPaths.red__png,
+		AssetPaths.orange__png,
+		AssetPaths.yellow__png,
+		AssetPaths.green__png,
+		AssetPaths.blue__png
 	];
 
 	public var grid:Grid;
@@ -30,6 +30,7 @@ class GridTile extends FlxSprite
 		var Y = grid.y + Grid.CELL_HEIGHT * gridY;
 
 		super(X, Y);
-		makeGraphic(Grid.CELL_WIDTH, Grid.CELL_HEIGHT, tileColors[type]);
+		loadGraphic(tileColors[type],false,Grid.CELL_WIDTH,Grid.CELL_HEIGHT);
+        
 	}
 }
