@@ -107,9 +107,14 @@ class GameGrid
 				readRow--;
 			}
 		}
-		while (fillInFromTop && row >= 0)
+		while (row >= 0)
 		{
-			setTile(getSquare(column, row), Game.randomTile());
+			var tile = 0;
+			if (fillInFromTop)
+			{
+				tile = Game.randomTile();
+			}
+			setTile(getSquare(column, row), tile);
 			row--;
 		}
 	}
