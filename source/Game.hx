@@ -134,13 +134,17 @@ class Game
 
 	public function hoverOnTile(square:Int):Void
 	{
+		// Don't do anything if the square is empty.
+		if (grids[activeGrid].tiles[square] == 0)
+			return;
+		// If the path is empty, start it.
 		if (currentPath.length == 0)
 		{
 			addTileToPath(square);
 			return;
 		}
-		// Allow "undo"
-		if (square == currentPath[currentPath.length - 2])
+		// "Undo" if you revisit the square before the end.
+		if (currentPath.length >= 2 && square == currentPath[currentPath.length - 2])
 		{
 			deleteTileFromPath(currentPath[currentPath.length - 1]);
 			return;
