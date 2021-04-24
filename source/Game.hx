@@ -20,6 +20,8 @@ class Game
 
 		grids = new Array<GameGrid>();
 		grids.push(new GameGrid(width, height));
+		grids[0].randomizeTiles();
+		grids.push(new GameGrid(width, height));
 	}
 
 	public static function randomTile():Int
@@ -59,12 +61,18 @@ class Game
 		}
 
 		// passed checks
+		var deletedTile = curGrid.tiles[squares[1]];
+
 		curGrid.tiles[squares[1]] = 0;
 		curGrid.tiles[squares[0]] = randomTile();
 		curGrid.tiles[squares[2]] = randomTile();
 
 		// move tiles to next grid
-		// TODO
+		if (gridId + 1 < grids.length)
+		{
+			var nxtGrid = grids[gridId + 1];
+			nxtGrid.tiles[squares[1]] = curGrid.tiles[squares[1]];
+		}
 
 		return true;
 	}

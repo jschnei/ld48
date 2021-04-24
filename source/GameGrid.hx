@@ -16,7 +16,14 @@ class GameGrid
 		this.height = height;
 
 		tiles = new Vector<Int>(width * height);
+		for (i in 0...(width * height))
+		{
+			tiles[i] = 0;
+		}
+	}
 
+	public function randomizeTiles()
+	{
 		for (i in 0...(width * height))
 		{
 			tiles[i] = Game.randomTile();
