@@ -69,12 +69,14 @@ class Game
 		curGrid.setTile(squares[1], 0);
 		curGrid.setTile(squares[0], randomTile());
 		curGrid.setTile(squares[2], randomTile());
+		curGrid.doGravity(false);
 
 		// move tiles to next grid
 		if (gridId + 1 < grids.length)
 		{
 			var nxtGrid = grids[gridId + 1];
 			nxtGrid.setTile(squares[1], deletedTile);
+			nxtGrid.doGravity(false);
 		}
 
 		return true;
