@@ -6,7 +6,6 @@ class Game
 	public var width:Int;
 	public var height:Int;
 
-	public static var numColors:Int = 5;
 	public static var rand:FlxRandom;
 
 	public var activeGrid:Int = 0;
@@ -35,7 +34,7 @@ class Game
 
 	public static function randomTile():Int
 	{
-		return rand.int(1, numColors);
+		return rand.int(1, Registry.NUM_COLORS);
 	}
 
 	public function getTile(x:Int, y:Int, gridId:Int):Int
@@ -105,7 +104,8 @@ class Game
 			return;
 		}
 		// Allow "undo"
-		if (square == currentPath[currentPath.length - 2]) {
+		if (square == currentPath[currentPath.length - 2])
+		{
 			deleteTileFromPath(currentPath[currentPath.length - 1]);
 			return;
 		}

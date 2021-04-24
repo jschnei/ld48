@@ -6,6 +6,10 @@ import flixel.text.FlxText;
 
 class PlayState extends FlxState
 {
+	public static var GRID_OFFSET_X:Int = 25;
+	public static var TOP_GRID_OFFSET_Y:Int = 25;
+	public static var BOTTOM_GRID_OFFSET_Y:Int = 425;
+
 	private var activeGrid:Grid;
 	private var nextGrid:Grid;
 	private var _game:Game;
@@ -14,7 +18,7 @@ class PlayState extends FlxState
 
 	override public function create()
 	{
-		_game = new Game(7, 10);
+		_game = new Game(Registry.GAME_WIDTH, Registry.GAME_HEIGHT);
 		switchActiveId(0);
 
 		_scoreText = new FlxText(260, 50);
@@ -81,8 +85,8 @@ class PlayState extends FlxState
 		}
 
 		_game.activeGrid = gridId;
-		activeGrid = Grid.fromGame(_game, 25, 25, gridId);
-		nextGrid = Grid.fromGame(_game, 25, 425, gridId + 1, 0.75);
+		activeGrid = Grid.fromGame(_game, GRID_OFFSET_X, TOP_GRID_OFFSET_Y, gridId);
+		nextGrid = Grid.fromGame(_game, GRID_OFFSET_X, BOTTOM_GRID_OFFSET_Y, gridId + 1, 0.75);
 
 		add(activeGrid);
 		add(nextGrid);
