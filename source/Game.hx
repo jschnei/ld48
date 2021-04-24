@@ -1,5 +1,7 @@
 import flixel.math.FlxRandom;
 import haxe.ds.Vector;
+import flixel.system.FlxSound;
+import flixel.FlxG;
 
 class Game
 {
@@ -12,6 +14,9 @@ class Game
 	public var grids:Array<GameGrid>;
 
 	public var currentPath:Array<Int>;
+    private var _selectSound:FlxSound;
+    private var _clearSound:FlxSound;
+    private var _failureSound:FlxSound;
 
 	public function new(width:Int, height:Int)
 	{
@@ -28,6 +33,10 @@ class Game
 		grids[0].randomizeTiles();
 		grids[0].activated = true;
 		grids[0].isRegenerating = Registry.REGENERATE_TILES;
+
+        _selectSound = FlxG.sound.load(AssetPaths.select__wav,0.3);
+        _clearSound = FlxG.sound.load(AssetPaths.clear__wav, 0.5);
+        _failureSound = FlxG.sound.load(AssetPaths.failure__wav,0.5);
 
 		currentPath = new Array<Int>();
 	}
@@ -94,7 +103,7 @@ class Game
 				trace("Unknown rule");
 				return false;
 		}
-
+        _clearSound.play();
 		// passed checks
 		Registry.score += Std.int(Math.pow(3, gridId));
 		var deletedTile = curGrid.tiles[moveTile];
@@ -159,7 +168,9 @@ class Game
 
 	public function submitPath():Void
 	{
-		doMove(currentPath, activeGrid);
+		if(!doMove(currentPath, activeGrid)){
+            _failureSound.play();
+        }
 		clearPath();
 	}
 
@@ -167,6 +178,7 @@ class Game
 	{
 		currentPath.push(square);
 		grids[activeGrid].attachedGrid.setTileHighlight(square, true);
+        _selectSound.play();
 	}
 
 	public function deleteTileFromPath(square:Int):Void
