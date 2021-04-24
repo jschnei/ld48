@@ -13,7 +13,7 @@ class GridTile extends FlxSprite
 		FlxColor.BLUE,
 		FlxColor.YELLOW,
 		FlxColor.GREEN,
-		FlxColor.BLACK
+		FlxColor.WHITE
 	];
 
 	public var grid:Grid;
