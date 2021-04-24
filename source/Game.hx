@@ -97,7 +97,7 @@ class Game
 
 		// passed checks
 		Registry.score += Std.int(Math.pow(3, gridId));
-		var deletedTile = curGrid.tiles[squares[1]];
+		var deletedTile = curGrid.tiles[moveTile];
 
 		for (square in recolorTiles)
 		{
