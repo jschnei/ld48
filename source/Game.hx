@@ -51,34 +51,70 @@ class Game
 		var curGrid = grids[gridId];
 		var L = squares.length;
 
-		if (L != 3)
-			return false;
-
 		for (square in squares)
 		{
 			if (curGrid.tiles[square] == 0)
 				return false;
 		}
 
-		if (curGrid.tiles[squares[0]] != curGrid.tiles[squares[2]])
+		// note: only supports moving a single tile right now
+		var moveTile:Int;
+		var recolorTiles:Array<Int>;
+
+		switch (Registry.GAME_RULE)
 		{
-			return false;
+			case Registry.GameRule.SANDWICH:
+				if (L != 3)
+					return false;
+
+				if (curGrid.tiles[squares[0]] != curGrid.tiles[squares[2]])
+				{
+					return false;
+				}
+
+				recolorTiles = [squares[0], squares[2]];
+				moveTile = squares[1];
+			case Registry.GameRule.PALINDROME:
+				if (L != 5)
+					return false;
+
+				if (curGrid.tiles[squares[0]] != curGrid.tiles[squares[4]])
+				{
+					return false;
+				}
+
+				if (curGrid.tiles[squares[1]] != curGrid.tiles[squares[3]])
+				{
+					return false;
+				}
+
+				recolorTiles = [squares[0], squares[1], squares[3], squares[4]];
+				moveTile = squares[2];
+			default:
+				trace("Unknown rule");
+				return false;
 		}
 
 		// passed checks
 		Registry.score += Std.int(Math.pow(3, gridId));
 		var deletedTile = curGrid.tiles[squares[1]];
 
-		curGrid.setTile(squares[1], 0);
-		curGrid.setTile(squares[0], randomTile());
-		curGrid.setTile(squares[2], randomTile());
+		for (square in recolorTiles)
+		{
+			curGrid.setTile(square, randomTile());
+		}
+		curGrid.setTile(moveTile, 0);
+
+		// curGrid.setTile(squares[1], 0);
+		// curGrid.setTile(squares[0], randomTile());
+		// curGrid.setTile(squares[2], randomTile());
 		curGrid.doGravity();
 
 		// move tiles to next grid
 		if (gridId + 1 < grids.length)
 		{
 			var nxtGrid = grids[gridId + 1];
-			var nxtSquare = nxtGrid.moveToTop(squares[1]);
+			var nxtSquare = nxtGrid.moveToTop(moveTile);
 
 			if (!nxtGrid.activated)
 			{
