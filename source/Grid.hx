@@ -35,6 +35,21 @@ class Grid extends FlxSprite
 		}
 	}
 
+	public static function fromGame(game:Game, offsetX:Int, offsetY:Int):Grid
+	{
+		var grid = new Grid(game.width, game.height, offsetX, offsetY);
+
+		for (y in 0...game.height)
+		{
+			for (x in 0...game.width)
+			{
+				var tile = new GridTile(grid, x, y, game.getTile(x, y));
+				grid.gridTiles.push(tile);
+			}
+		}
+		return grid;
+	}
+
 	public function getSquare(dx:Float, dy:Float):Int
 	{
 		var x:Int = Math.floor(dx / CELL_WIDTH);

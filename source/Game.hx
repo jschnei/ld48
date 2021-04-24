@@ -1,37 +1,46 @@
-import Random;
+import flixel.math.FlxRandom;
 import haxe.ds.Vector;
 
 class Game
 {
 	// 0 = empty square
 	// positive numbers are colors
-	public var gridTiles:Array<Int>;
+	public var tiles:Vector<Int>;
 
 	public var width:Int;
 	public var height:Int;
 	public var numColors:Int = 5;
 
+	public var rand:FlxRandom;
+
 	public function new(width:Int, height:Int)
 	{
+		rand = new FlxRandom(Std.int(Date.now().getTime() / 1000));
+
 		this.width = width;
 		this.height = height;
 
-		this.gridTiles = new Array<Int>(width * height);
+		tiles = new Vector<Int>(width * height);
 
-		for (i in 0..(width * height))
+		for (i in 0...(width * height))
 		{
-			this.gridTiles[i] = 0;
+			tiles[i] = randomTile();
 		}
 	}
 
 	public function randomTile():Int
 	{
-		return Random.int(1, numColors);
+		return rand.int(1, numColors);
 	}
 
 	public function getSquare(x:Int, y:Int):Int
 	{
 		return y * width + x;
+	}
+
+	public function getTile(x:Int, y:Int):Int
+	{
+		return tiles[getSquare(x, y)];
 	}
 
 	public function isAdjacent(square1:Int, square2:Int)
@@ -67,15 +76,15 @@ class Game
 		if (squares[0] == squares[2])
 			return false;
 
-		if (gridTiles[squares[0]] == 0 || gridTiles[squares[1]] == 0 || gridTiles[squares[2]] == 0)
+		if (tiles[squares[0]] == 0 || tiles[squares[1]] == 0 || tiles[squares[2]] == 0)
 		{
 			return false;
 		}
 
 		// passed checks
-		gridTiles[squares[1]] = 0;
-		gridTiles[squares[0]] = randomTile();
-		gridTiles[squares[2]] = randomTile();
+		tiles[squares[1]] = 0;
+		tiles[squares[0]] = randomTile();
+		tiles[squares[2]] = randomTile();
 
 		return true;
 	}
