@@ -37,4 +37,12 @@ class GridTile extends FlxSprite
 	{
 		loadGraphic(tileColors[colorId], false, Grid.CELL_WIDTH, Grid.CELL_HEIGHT);
 	}
+
+	public function setHighlighted(highlighted:Bool) {
+		if (highlighted) {
+			this.alpha = 0.7;
+		} else {
+			this.alpha = 1.0;
+		}
+	}
 }

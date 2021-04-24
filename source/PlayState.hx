@@ -31,7 +31,7 @@ class PlayState extends FlxState
 			var hoveringTile = _topGrid.getSquare(FlxG.mouse.x, FlxG.mouse.y);
 			if (hoveringTile != -1)
 			{
-				_game.addTileToPath(hoveringTile);
+				_game.hoverOnTile(hoveringTile);
 			}
 		}
 		if (FlxG.mouse.justReleased)

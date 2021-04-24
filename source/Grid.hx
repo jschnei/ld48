@@ -103,4 +103,9 @@ class Grid extends FlxSprite
 		gridTiles[square] = gridTile;
 		parentState.add(gridTile);
 	}
+
+	public function setTileHighlight(square:Int, highlighted:Bool) {
+		if (gridTiles[square] != null)
+			gridTiles[square].setHighlighted(highlighted);
+	}
 }

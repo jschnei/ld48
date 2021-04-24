@@ -87,12 +87,11 @@ class Game
 		return true;
 	}
 
-	public function addTileToPath(square:Int):Void
+	public function hoverOnTile(square:Int):Void
 	{
 		if (currentPath.length == 0)
 		{
-			currentPath.push(square);
-			trace(currentPath);
+			addTileToPath(square);
 			return;
 		}
 		// Check that the square already isn't in the path and is adjacent to the last one.
@@ -100,13 +99,24 @@ class Game
 			return;
 		if (!grids[activeGrid].isAdjacent(square, currentPath[currentPath.length - 1]))
 			return;
-		currentPath.push(square);
-		trace(currentPath);
+		addTileToPath(square);
 	}
 
 	public function submitPath():Void
 	{
-		trace("Move:", doMove(currentPath, activeGrid));
+		doMove(currentPath, activeGrid);
+		clearPath();
+	}
+
+	public function addTileToPath(square:Int):Void {
+		currentPath.push(square);
+		grids[activeGrid].attachedGrid.setTileHighlight(square, true);
+	}
+
+	public function clearPath():Void {
+		for (square in currentPath) {
+			grids[activeGrid].attachedGrid.setTileHighlight(square, false);	
+		}
 		currentPath.resize(0);
 	}
 }
