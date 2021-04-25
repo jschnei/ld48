@@ -152,4 +152,12 @@ class GameGrid
 			row--;
 		}
 	}
+
+    public function refresh(square:Int)
+    {
+        if(attachedGrid != null)
+        {
+            attachedGrid.refresh(square);
+        }
+    }
 }

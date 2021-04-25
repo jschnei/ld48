@@ -84,6 +84,12 @@ class PlayState extends FlxState
 			reset();
 		}
 
+        if(FlxG.keys.justPressed.A)
+        {
+            Registry.accessible = !Registry.accessible;
+            _game.refreshTiles();
+        }
+
 		super.update(elapsed);
 	}
 

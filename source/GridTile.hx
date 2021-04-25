@@ -11,13 +11,22 @@ class GridTile extends FlxSpriteGroup
 {
 	public var tileColors:Array<String> = [
 		AssetPaths.grey__png, // not used
+		AssetPaths.red__png,
+		AssetPaths.orange__png,
+		AssetPaths.yellow__png,
+		AssetPaths.green__png,
+		AssetPaths.blue__png,
+		AssetPaths.purple__png,
+	];
+
+    public var accessibleTiles:Array<String> = [
+		AssetPaths.grey__png, // not used
 		AssetPaths.reda__png,
 		AssetPaths.orangea__png,
 		AssetPaths.yellowa__png,
 		AssetPaths.greena__png,
 		AssetPaths.bluea__png,
 		AssetPaths.purplea__png,
-		AssetPaths.teal__png
 	];
 
 	public var grid:Grid;
@@ -41,11 +50,25 @@ class GridTile extends FlxSpriteGroup
 
 		super(X, Y);
 		_tileSprite = new FlxSprite();
-		_tileSprite.loadGraphic(tileColors[colorId], false, Grid.CELL_WIDTH, Grid.CELL_HEIGHT);
+        if(Registry.accessible)
+        {
+            _tileSprite.loadGraphic(accessibleTiles[colorId], false, Grid.CELL_WIDTH, Grid.CELL_HEIGHT);
+        }
+        else
+        {
+		    _tileSprite.loadGraphic(tileColors[colorId], false, Grid.CELL_WIDTH, Grid.CELL_HEIGHT);
+        }
 		add(_tileSprite);
 		scale.set(grid.gridScale, grid.gridScale);
 		_nextTileSprite = new FlxSprite();
-		_nextTileSprite.loadGraphic(tileColors[colorId], false, Grid.CELL_WIDTH, Grid.CELL_HEIGHT);
+        if(Registry.accessible)
+        {
+            _nextTileSprite.loadGraphic(accessibleTiles[colorId], false, Grid.CELL_WIDTH, Grid.CELL_HEIGHT);
+        } 
+        else 
+        {
+		    _nextTileSprite.loadGraphic(tileColors[colorId], false, Grid.CELL_WIDTH, Grid.CELL_HEIGHT);
+        }
 		_nextTileSprite.alpha = 0;
 		add(_nextTileSprite);
 
@@ -60,7 +83,14 @@ class GridTile extends FlxSpriteGroup
 		if (this.colorId == colorId)
 			return;
 		this.colorId = colorId;
-		_nextTileSprite.loadGraphic(tileColors[colorId], false, Grid.CELL_WIDTH, Grid.CELL_HEIGHT);
+        if(Registry.accessible)
+        {
+            _nextTileSprite.loadGraphic(accessibleTiles[colorId], false, Grid.CELL_WIDTH, Grid.CELL_HEIGHT);
+        } 
+        else
+        {
+		    _nextTileSprite.loadGraphic(tileColors[colorId], false, Grid.CELL_WIDTH, Grid.CELL_HEIGHT);
+        }
 		_nextTileSprite.alpha = 0;
 		FlxTween.tween(_tileSprite, {alpha: 0}, 0.1);
 		FlxTween.tween(_nextTileSprite, {alpha: 1}, 0.1, {onComplete: finishChangeColor});
@@ -82,4 +112,16 @@ class GridTile extends FlxSpriteGroup
 			_tileSprite.alpha = 1.0;
 		}
 	}
+
+    public function refresh()
+    {
+        if(Registry.accessible)
+        {
+            _tileSprite.loadGraphic(accessibleTiles[colorId], false, Grid.CELL_WIDTH, Grid.CELL_HEIGHT);
+        }
+        else
+        {
+		    _tileSprite.loadGraphic(tileColors[colorId], false, Grid.CELL_WIDTH, Grid.CELL_HEIGHT);
+        }
+    }
 }

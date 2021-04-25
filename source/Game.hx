@@ -208,4 +208,15 @@ class Game
 		if (activeGrid + 1 < grids.length)
 			grids[activeGrid + 1].attachedGrid = null;
 	}
+
+    public function refreshTiles()
+    {
+        for(grid in grids)
+        {
+            for (i in 0...(width * height))
+            {
+                grid.refresh(i);
+            }
+        }
+    }
 }

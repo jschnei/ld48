@@ -19,4 +19,6 @@ class Registry
 	public static var TIME_LIMIT:Float = 120;
 	
 	public static var score:Int = 0;
+
+    public static var accessible:Bool = false;
 }
