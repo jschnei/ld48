@@ -29,7 +29,7 @@ class MusicUtils {
     }
 
     public static function startMusic(mStart:FlxSoundAsset, loopPoint:Float) {
-        FlxG.sound.playMusic(mStart);
+        FlxG.sound.playMusic(mStart, 0.3);
         FlxG.sound.music.loopTime = loopPoint;
     }
 }

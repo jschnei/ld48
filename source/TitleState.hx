@@ -42,7 +42,7 @@ class TitleState extends FlxState
 		_startText.setFormat(AssetPaths.Action_Man__ttf, 32, FlxColor.WHITE, FlxTextAlign.CENTER);
 		add(_startText);
 
-		MusicUtils.playMusic(AssetPaths.Mine__ogg, 0);
+		MusicUtils.playMusic(AssetPaths.fruitbox__ogg, 0);
 	}
 
 	override public function update(elapsed:Float):Void
