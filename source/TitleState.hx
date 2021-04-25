@@ -8,7 +8,7 @@ import flixel.util.FlxColor;
 
 class TitleState extends FlxState
 {
-	private static var TITLE = "Deeper";
+	private static var TITLE = "Mine!";
 
 	private var _background:FlxBackdrop;
 	private var _titleText:FlxText;
@@ -28,7 +28,7 @@ class TitleState extends FlxState
 		_titleText.setFormat(AssetPaths.Action_Man__ttf, 48, FlxColor.WHITE, FlxTextAlign.CENTER);
 		add(_titleText);
 
-		var insString = "The objective is to go deeper!\n
+		var insString = "The objective is to mine for treasure!\n
 		Drag your mouse along three tiles with the first and last matching.\n
 		The middle tile will drop to the next board, and the first and last tile will change color.\n
 		Use UP/DOWN or W/S to move between boards.\n
