@@ -42,7 +42,7 @@ class EndState extends FlxState
 	public function submitScore()
 	{
 		var req = new haxe.Http(Registry.SUBMIT_SCORE_URL);
-		req.setParameter("name", "Anon");
+		req.setParameter("name", Registry.name);
 		req.setParameter("score", Std.string(Registry.score));
 		req.onError = function(msg:String)
 		{
