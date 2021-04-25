@@ -22,6 +22,8 @@ class Grid extends FlxSpriteGroup
 	public var gridScale:Float;
 	public var cellWidth:Float;
 	public var cellHeight:Float;
+	public var gridPixHeight:Int;
+	public var gridPixWidth:Int;
 
 	public var gameId:Int;
 
@@ -36,6 +38,8 @@ class Grid extends FlxSpriteGroup
 		gridScale = scale;
 		cellWidth = CELL_WIDTH * scale;
 		cellHeight = CELL_HEIGHT * scale;
+		gridPixWidth = Std.int(cellWidth * width);
+		gridPixHeight = Std.int(cellHeight * height);
 
 		gridTiles = new Vector<GridTile>(width * height);
 

@@ -9,8 +9,9 @@ class PlayState extends FlxState
 {
 	public static var GRID_OFFSET_X:Int = 25;
 	public static var TOP_GRID_OFFSET_Y:Int = 25;
-	public static var MIDDLE_GRID_OFFSET_Y:Int = 350;
-	public static var BOTTOM_GRID_OFFSET_Y:Int = 600;
+	public static var GRID_GAP_Y:Int = 10;
+	public static var MID_GRID_SCALE:Float = 0.75;
+	public static var BOT_GRID_SCALE:Float = 0.5;
 
 	private var activeGrid:Grid;
 	private var nextGrid:Grid;
@@ -141,8 +142,10 @@ class PlayState extends FlxState
 
 		_game.activeGrid = gridId;
 		activeGrid = Grid.fromGame(_game, GRID_OFFSET_X, TOP_GRID_OFFSET_Y, gridId);
-		nextGrid = Grid.fromGame(_game, GRID_OFFSET_X, MIDDLE_GRID_OFFSET_Y, gridId + 1, 0.75);
-		next2Grid = Grid.fromGame(_game, GRID_OFFSET_X, BOTTOM_GRID_OFFSET_Y, gridId + 2, 0.5);
+		var midGridOffsetY = TOP_GRID_OFFSET_Y + activeGrid.gridPixHeight + GRID_GAP_Y;
+		nextGrid = Grid.fromGame(_game, GRID_OFFSET_X, midGridOffsetY, gridId + 1, MID_GRID_SCALE);
+		var botGridOffsetY = midGridOffsetY + nextGrid.gridPixHeight + GRID_GAP_Y;
+		next2Grid = Grid.fromGame(_game, GRID_OFFSET_X, botGridOffsetY, gridId + 2, BOT_GRID_SCALE);
 
 		add(activeGrid);
 		add(nextGrid);
