@@ -3,6 +3,7 @@ Aesthetics/Polish:
 - Art for ending screen
 - Choose different font?
 - Improve tweening of grids
+- Sound effect for shifting between grids
 
 Features:
 - Scroll between boards with scroll wheel?
@@ -11,6 +12,9 @@ Features:
 - Separate leaderboards for Daily / All Time?
     - Separate leaderboard for Zen mode (daily challenge?)
 - slightly more complicated anti-cheat?
+
+Bugs:
+- Textfield is kinda janky on HTML5
 
 Deploying:
 - check that everything works in HTML5

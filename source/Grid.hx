@@ -15,6 +15,8 @@ class Grid extends FlxSpriteGroup
 	public static var CELL_WIDTH:Int = 32;
 	public static var CELL_HEIGHT:Int = 32;
 
+	public static var GRID_TWEEN_DURATION:Float = 0.2;
+
 	// The number of rows and columns, respectively
 	public var gridHeight:Int;
 	public var gridWidth:Int;
@@ -50,11 +52,15 @@ class Grid extends FlxSpriteGroup
 		add(gridBase);
 	}
 
-	public static function fromGame(game:Game, offsetX:Int, offsetY:Int, gridId:Int, ?gridScale:Float = 1.0):Grid
+	public static function fromGame(game:Game, offsetX:Int, offsetY:Int, gridId:Int, ?gridScale:Float = 1.0, ?attachGrids:Bool = true):Grid
 	{
 		var grid = new Grid(game.width, game.height, offsetX, offsetY, gridScale);
-		grid.gameId = gridId;
-		game.grids[gridId].attachedGrid = grid;
+
+		if (attachGrids)
+		{
+			grid.gameId = gridId;
+			game.grids[gridId].attachedGrid = grid;
+		}
 
 		for (y in 0...game.height)
 		{
@@ -140,14 +146,20 @@ class Grid extends FlxSpriteGroup
 			gridTiles[square].setHighlighted(highlighted);
 	}
 
-	public function tweenToGrid(other:Grid)
+	public function tweenToGrid(other:Grid, ?onComplete:(FlxTween) -> Void = null)
 	{
+		if (onComplete == null)
+			onComplete = function(tween:FlxTween) {};
+
 		FlxTween.tween(gridBase, {
 			x: other.x,
 			y: other.y,
 			"scale.x": other.gridScale,
-			"scale.y": other.gridScale
-		}, 0.2);
+			"scale.y": other.gridScale,
+			alpha: other.alpha
+		}, GRID_TWEEN_DURATION, {
+			onComplete: onComplete
+		});
 
 		for (y in 0...gridHeight)
 		{
@@ -159,14 +171,15 @@ class Grid extends FlxSpriteGroup
 				{
 					// tween it to the appropriate location in the other grid
 					var target = other.getCorner(square);
-					target.x -= (1 - gridScale) * Grid.CELL_WIDTH / 2;
-					target.y -= (1 - gridScale) * Grid.CELL_HEIGHT / 2;
+					target.x -= (1 - other.gridScale) * Grid.CELL_WIDTH / 2;
+					target.y -= (1 - other.gridScale) * Grid.CELL_HEIGHT / 2;
 					FlxTween.tween(gridTile, {
 						x: target.x,
 						y: target.y,
 						"scale.x": other.gridScale,
-						"scale.y": other.gridScale
-					}, 0.2);
+						"scale.y": other.gridScale,
+						alpha: other.alpha
+					}, GRID_TWEEN_DURATION);
 				}
 			}
 		}

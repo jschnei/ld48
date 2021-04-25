@@ -9,9 +9,13 @@ class PlayState extends FlxState
 {
 	public static var GRID_OFFSET_X:Int = 25;
 	public static var TOP_GRID_OFFSET_Y:Int = 25;
+	public static var UP_TMP_GRID_OFFSET_Y:Int = -400;
+	public static var DOWN_TMP_GRID_OFFSET_Y:Int = 850;
 	public static var GRID_GAP_Y:Int = 10;
+	public static var UP_TMP_GRID_SCALE:Float = 1.25;
 	public static var MID_GRID_SCALE:Float = 0.75;
 	public static var BOT_GRID_SCALE:Float = 0.5;
+	public static var DOWN_TMP_GRID_SCALE:Float = 0.25;
 
 	private var activeGrid:Grid;
 	private var nextGrid:Grid;
@@ -85,11 +89,11 @@ class PlayState extends FlxState
 			reset();
 		}
 
-        if(FlxG.keys.justPressed.A)
-        {
-            Registry.accessible = !Registry.accessible;
-            _game.refreshTiles();
-        }
+		if (FlxG.keys.justPressed.A)
+		{
+			Registry.accessible = !Registry.accessible;
+			_game.refreshTiles();
+		}
 
 		super.update(elapsed);
 	}
@@ -100,15 +104,24 @@ class PlayState extends FlxState
 		if (curId + 3 < _game.grids.length)
 		{
 			paused = true;
-			FlxTween.tween(activeGrid, {alpha: 0}, 0.2, {
-				onComplete: function(tween:FlxTween)
-				{
-					switchActiveId(curId + 1);
-				}
-			});
 
+			var tempUpGrid = Grid.fromGame(_game, GRID_OFFSET_X, UP_TMP_GRID_OFFSET_Y, curId + 3, UP_TMP_GRID_SCALE, false);
+			tempUpGrid.alpha = 0;
+
+			var tempDownGrid = Grid.fromGame(_game, GRID_OFFSET_X, DOWN_TMP_GRID_OFFSET_Y, curId + 3, DOWN_TMP_GRID_SCALE, false);
+			tempDownGrid.alpha = 0;
+			add(tempDownGrid);
+
+			activeGrid.tweenToGrid(tempUpGrid, function(tween:FlxTween)
+			{
+				switchActiveId(curId + 1);
+			});
 			nextGrid.tweenToGrid(activeGrid);
 			next2Grid.tweenToGrid(nextGrid);
+			tempDownGrid.tweenToGrid(next2Grid, function(tween:FlxTween)
+			{
+				remove(tempDownGrid);
+			});
 		}
 	}
 
@@ -118,11 +131,22 @@ class PlayState extends FlxState
 		if (curId - 1 >= 0)
 		{
 			paused = true;
-			FlxTween.tween(next2Grid, {alpha: 0}, 0.2, {
-				onComplete: function(tween:FlxTween)
-				{
-					switchActiveId(curId - 1);
-				}
+
+			var tempUpGrid = Grid.fromGame(_game, GRID_OFFSET_X, UP_TMP_GRID_OFFSET_Y, curId - 1, 1.25, false);
+			tempUpGrid.alpha = 0;
+			add(tempUpGrid);
+
+			var tempDownGrid = Grid.fromGame(_game, GRID_OFFSET_X, DOWN_TMP_GRID_OFFSET_Y, curId - 1, 0.4, false);
+			tempDownGrid.alpha = 0;
+
+			next2Grid.tweenToGrid(tempDownGrid, function(tween:FlxTween)
+			{
+				switchActiveId(curId - 1);
+			});
+
+			tempUpGrid.tweenToGrid(activeGrid, function(tween:FlxTween)
+			{
+				remove(tempUpGrid);
 			});
 
 			activeGrid.tweenToGrid(nextGrid);
