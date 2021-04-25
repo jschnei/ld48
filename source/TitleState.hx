@@ -1,8 +1,8 @@
 package;
 
 import flixel.FlxG;
+import flixel.FlxSprite;
 import flixel.FlxState;
-import flixel.addons.display.FlxBackdrop;
 import flixel.text.FlxText;
 import flixel.util.FlxColor;
 
@@ -10,7 +10,7 @@ class TitleState extends FlxState
 {
 	private static var TITLE = "Mine!";
 
-	private var _background:FlxBackdrop;
+	private var _background:FlxSprite;
 	private var _titleText:FlxText;
 	private var _insText:FlxText;
 	private var _startText:FlxText;
@@ -18,13 +18,10 @@ class TitleState extends FlxState
 	override public function create()
 	{
 		super.create();
-		// _selectSound = FlxG.sound.load(AssetPaths.select__wav, 0.3);
 
-		// bgColor = new FlxColor(0xFF009900);
-		// _background = new FlxBackdrop(AssetPaths.grass_dark__png);
-		// add(_background);
+		addBackground();
 
-		_titleText = new FlxText(0, 150, Registry.WINDOW_WIDTH, TITLE);
+		_titleText = new FlxText(0, 220, Registry.WINDOW_WIDTH, TITLE);
 		_titleText.setFormat(AssetPaths.Action_Man__ttf, 48, FlxColor.WHITE, FlxTextAlign.CENTER);
 		add(_titleText);
 
@@ -34,11 +31,11 @@ class TitleState extends FlxState
 		Use UP/DOWN or W/S to move between boards.\n
 		As you go deeper, there's better treasure to be found and more points to be gained!
 		";
-		_insText = new FlxText(0, 250, Registry.WINDOW_WIDTH, insString);
+		_insText = new FlxText(0, 300, Registry.WINDOW_WIDTH, insString);
 		_insText.setFormat(AssetPaths.Action_Man__ttf, 16, FlxColor.WHITE, FlxTextAlign.CENTER);
 		add(_insText);
 
-		_startText = new FlxText(0, 550, Registry.WINDOW_WIDTH, "Start game");
+		_startText = new FlxText(0, 680, Registry.WINDOW_WIDTH, "Start game");
 		_startText.setFormat(AssetPaths.Action_Man__ttf, 32, FlxColor.WHITE, FlxTextAlign.CENTER);
 		add(_startText);
 
@@ -52,5 +49,15 @@ class TitleState extends FlxState
 		{
 			FlxG.switchState(new PlayState());
 		}
+	}
+
+	private function addBackground():Void
+	{
+		_background = new FlxSprite();
+		_background.loadGraphic(AssetPaths.main__png, true, Registry.WINDOW_WIDTH, Registry.WINDOW_HEIGHT);
+		var flicker = "flicker";
+		_background.animation.add(flicker, [0,1], 1, true);
+		_background.animation.play(flicker);
+		add(_background);
 	}
 }
