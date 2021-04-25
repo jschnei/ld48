@@ -1,0 +1,14 @@
+<html>
+<head>
+    <title>LD48 Leaderboard</title>
+</head>
+
+<h1>Leaderboard</h1>
+
+<ol>
+    {% for name, score in high_scores %}
+        <li>{{name}} (<b>{{score}}</b>)</li>
+    {% endfor %}
+</ol>
+
+</html>
