@@ -80,6 +80,14 @@ class GameGrid
 		}
 	}
 
+	public function moveTile(fromX:Int, fromY:Int, toX:Int, toY:Int) {
+		if (getTile(fromX, fromY) == 0 || getTile(toX, toY) != 0)
+			return;
+		tiles[getSquare(toX, toY)] = tiles[getSquare(fromX, fromY)];
+		tiles[getSquare(fromX, fromY)] = 0;
+		attachedGrid.moveTile(getSquare(fromX, fromY), getSquare(toX, toY));
+	}
+
 	public function cycleTile(square:Int, offset:Int)
 	{
 		var curTile = tiles[square];
@@ -128,7 +136,7 @@ class GameGrid
 			var tile = getTile(column, readRow);
 			if (tile > 0)
 			{
-				setTile(getSquare(column, row), getTile(column, readRow));
+				moveTile(column, readRow, column, row);
 				row--;
 				readRow--;
 			}

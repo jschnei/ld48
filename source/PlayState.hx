@@ -7,10 +7,12 @@ class PlayState extends FlxState
 {
 	public static var GRID_OFFSET_X:Int = 25;
 	public static var TOP_GRID_OFFSET_Y:Int = 25;
-	public static var BOTTOM_GRID_OFFSET_Y:Int = 425;
+	public static var MIDDLE_GRID_OFFSET_Y:Int = 350;
+	public static var BOTTOM_GRID_OFFSET_Y:Int = 600;
 
 	private var activeGrid:Grid;
 	private var nextGrid:Grid;
+	private var next2Grid:Grid;
 	private var _game:Game;
 	private var _hud:HUD;
 
@@ -26,13 +28,13 @@ class PlayState extends FlxState
 		super.create();
 	}
 
-    public function reset()
-    {
+	public function reset()
+	{
 		Registry.score = 0;
 		_game = new Game(Registry.GAME_WIDTH, Registry.GAME_HEIGHT);
 		switchActiveId(0);
-		timeStart = Date.now().getTime()/1000;
-    }
+		timeStart = Date.now().getTime() / 1000;
+	}
 
 	override public function update(elapsed:Float)
 	{
@@ -59,9 +61,10 @@ class PlayState extends FlxState
 		}
 
 		_hud.setScore(Registry.score);
-		var timeElapsed:Float = Date.now().getTime()/1000 - timeStart;
+		var timeElapsed:Float = Date.now().getTime() / 1000 - timeStart;
 		_hud.setTimeLeft(Registry.TIME_LIMIT - timeElapsed);
-		if (timeElapsed > Registry.TIME_LIMIT) {
+		if (timeElapsed > Registry.TIME_LIMIT)
+		{
 			FlxG.switchState(new EndState());
 		}
 
@@ -76,7 +79,7 @@ class PlayState extends FlxState
 	public function incrementActiveId()
 	{
 		var curId = _game.activeGrid;
-		if (curId + 2 < _game.grids.length)
+		if (curId + 3 < _game.grids.length)
 		{
 			switchActiveId(curId + 1);
 		}
@@ -98,13 +101,16 @@ class PlayState extends FlxState
 			_game.detachGrids();
 			remove(activeGrid);
 			remove(nextGrid);
+			remove(next2Grid);
 		}
 
 		_game.activeGrid = gridId;
 		activeGrid = Grid.fromGame(_game, GRID_OFFSET_X, TOP_GRID_OFFSET_Y, gridId);
-		nextGrid = Grid.fromGame(_game, GRID_OFFSET_X, BOTTOM_GRID_OFFSET_Y, gridId + 1, 0.75);
+		nextGrid = Grid.fromGame(_game, GRID_OFFSET_X, MIDDLE_GRID_OFFSET_Y, gridId + 1, 0.75);
+		next2Grid = Grid.fromGame(_game, GRID_OFFSET_X, BOTTOM_GRID_OFFSET_Y, gridId + 2, 0.5);
 
 		add(activeGrid);
 		add(nextGrid);
+		add(next2Grid);
 	}
 }
