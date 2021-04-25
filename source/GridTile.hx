@@ -60,6 +60,7 @@ class GridTile extends FlxSpriteGroup
 			return;
 		this.colorId = colorId;
 		_nextTileSprite.loadGraphic(tileColors[colorId], false, Grid.CELL_WIDTH, Grid.CELL_HEIGHT);
+		_nextTileSprite.alpha = 0;
 		FlxTween.tween(_tileSprite, {alpha: 0}, 0.1);
 		FlxTween.tween(_nextTileSprite, {alpha: 1}, 0.1, {onComplete: finishChangeColor});
 	}
