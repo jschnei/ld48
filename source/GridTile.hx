@@ -11,12 +11,12 @@ class GridTile extends FlxSpriteGroup
 {
 	public var tileColors:Array<String> = [
 		AssetPaths.grey__png, // not used
-		AssetPaths.red__png,
-		AssetPaths.orange__png,
-		AssetPaths.yellow__png,
-		AssetPaths.green__png,
-		AssetPaths.blue__png,
-		AssetPaths.purple__png,
+		AssetPaths.reda__png,
+		AssetPaths.orangea__png,
+		AssetPaths.yellowa__png,
+		AssetPaths.greena__png,
+		AssetPaths.bluea__png,
+		AssetPaths.purplea__png,
 		AssetPaths.teal__png
 	];
 
