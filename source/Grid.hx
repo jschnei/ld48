@@ -118,12 +118,7 @@ class Grid extends FlxSpriteGroup
 		gridTiles[toSquare] = movingTile;
 		gridTiles[fromSquare] = null;
 		FlxTween.tween(movingTile, {x: newLocation.x, y: newLocation.y}, 0.2, {
-			ease: FlxEase.cubeIn,
-			onComplete: function(tween:FlxTween)
-			{
-				movingTile.x = newLocation.x;
-				movingTile.y = newLocation.y;
-			}
+			ease: FlxEase.cubeIn
 		});
 	}
 
@@ -131,6 +126,38 @@ class Grid extends FlxSpriteGroup
 	{
 		if (gridTiles[square] != null)
 			gridTiles[square].setHighlighted(highlighted);
+	}
+
+	public function tweenToGrid(other:Grid)
+	{
+		FlxTween.tween(gridBase, {
+			x: other.x,
+			y: other.y,
+			"scale.x": other.gridScale,
+			"scale.y": other.gridScale
+		}, 0.2);
+
+		for (y in 0...gridHeight)
+		{
+			for (x in 0...gridWidth)
+			{
+				var square = y * gridWidth + x;
+				var gridTile = gridTiles[square];
+				if (gridTile != null)
+				{
+					// tween it to the appropriate location in the other grid
+					var target = other.getCorner(square);
+					target.x -= (1 - gridScale) * Grid.CELL_WIDTH / 2;
+					target.y -= (1 - gridScale) * Grid.CELL_HEIGHT / 2;
+					FlxTween.tween(gridTile, {
+						x: target.x,
+						y: target.y,
+						"scale.x": other.gridScale,
+						"scale.y": other.gridScale
+					}, 0.2);
+				}
+			}
+		}
 	}
 }
 

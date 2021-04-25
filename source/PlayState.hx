@@ -2,6 +2,7 @@ package;
 
 import flixel.FlxG;
 import flixel.FlxState;
+import flixel.tweens.FlxTween;
 
 class PlayState extends FlxState
 {
@@ -15,6 +16,8 @@ class PlayState extends FlxState
 	private var next2Grid:Grid;
 	private var _game:Game;
 	private var _hud:HUD;
+
+	public var paused:Bool = false;
 
 	private var timeStart:Float;
 
@@ -38,6 +41,9 @@ class PlayState extends FlxState
 
 	override public function update(elapsed:Float)
 	{
+		if (paused)
+			return;
+
 		if (FlxG.mouse.pressed)
 		{
 			var hoveringTile = activeGrid.getSquare(FlxG.mouse.x, FlxG.mouse.y);
@@ -81,7 +87,16 @@ class PlayState extends FlxState
 		var curId = _game.activeGrid;
 		if (curId + 3 < _game.grids.length)
 		{
-			switchActiveId(curId + 1);
+			paused = true;
+			FlxTween.tween(activeGrid, {alpha: 0}, 0.2, {
+				onComplete: function(tween:FlxTween)
+				{
+					switchActiveId(curId + 1);
+				}
+			});
+
+			nextGrid.tweenToGrid(activeGrid);
+			next2Grid.tweenToGrid(nextGrid);
 		}
 	}
 
@@ -90,7 +105,16 @@ class PlayState extends FlxState
 		var curId = _game.activeGrid;
 		if (curId - 1 >= 0)
 		{
-			switchActiveId(curId - 1);
+			paused = true;
+			FlxTween.tween(next2Grid, {alpha: 0}, 0.2, {
+				onComplete: function(tween:FlxTween)
+				{
+					switchActiveId(curId - 1);
+				}
+			});
+
+			activeGrid.tweenToGrid(nextGrid);
+			nextGrid.tweenToGrid(next2Grid);
 		}
 	}
 
@@ -112,5 +136,7 @@ class PlayState extends FlxState
 		add(activeGrid);
 		add(nextGrid);
 		add(next2Grid);
+
+		paused = false;
 	}
 }
