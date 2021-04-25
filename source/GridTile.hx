@@ -17,7 +17,7 @@ class GridTile extends FlxSpriteGroup
 		AssetPaths.green__png,
 		AssetPaths.blue__png,
 		AssetPaths.purple__png,
-        AssetPaths.teal__png
+		AssetPaths.teal__png
 	];
 
 	public var grid:Grid;
@@ -50,6 +50,7 @@ class GridTile extends FlxSpriteGroup
 		add(_nextTileSprite);
 
 		// hacky method of reorienting point since setting origin doesn't seem to work
+
 		x = X - (1 - grid.gridScale) * width / 2;
 		y = Y - (1 - grid.gridScale) * height / 2;
 	}
@@ -65,7 +66,8 @@ class GridTile extends FlxSpriteGroup
 		FlxTween.tween(_nextTileSprite, {alpha: 1}, 0.1, {onComplete: finishChangeColor});
 	}
 
-	public function finishChangeColor(tween:FlxTween) {
+	public function finishChangeColor(tween:FlxTween)
+	{
 		_tileSprite = _nextTileSprite;
 	}
 
