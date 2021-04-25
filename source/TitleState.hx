@@ -9,7 +9,6 @@ import flixel.util.FlxColor;
 class TitleState extends FlxState
 {
 	private static var TITLE = "Deeper";
-	private static var WIDTH = 400;
 
 	private var _background:FlxBackdrop;
 	private var _titleText:FlxText;
@@ -25,7 +24,7 @@ class TitleState extends FlxState
 		// _background = new FlxBackdrop(AssetPaths.grass_dark__png);
 		// add(_background);
 
-		_titleText = new FlxText(0, 150, WIDTH, TITLE);
+		_titleText = new FlxText(0, 150, Registry.WINDOW_WIDTH, TITLE);
 		_titleText.setFormat(AssetPaths.Action_Man__ttf, 48, FlxColor.WHITE, FlxTextAlign.CENTER);
 		add(_titleText);
 
@@ -35,11 +34,11 @@ class TitleState extends FlxState
 		Use UP/DOWN or W/S to move between boards.\n
 		As you go deeper, there's better treasure to be found and more points to be gained!
 		";
-		_insText = new FlxText(0, 250, WIDTH, insString);
+		_insText = new FlxText(0, 250, Registry.WINDOW_WIDTH, insString);
 		_insText.setFormat(AssetPaths.Action_Man__ttf, 16, FlxColor.WHITE, FlxTextAlign.CENTER);
 		add(_insText);
 
-		_startText = new FlxText(0, 550, WIDTH, "Start game");
+		_startText = new FlxText(0, 550, Registry.WINDOW_WIDTH, "Start game");
 		_startText.setFormat(AssetPaths.Action_Man__ttf, 32, FlxColor.WHITE, FlxTextAlign.CENTER);
 		add(_startText);
 
