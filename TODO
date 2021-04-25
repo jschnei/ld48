@@ -2,11 +2,9 @@ Aesthetics/Polish:
 - Art for game screen
 - Art for ending screen
 - Choose different font?
-- Improve tweening of grids
 - Sound effect for shifting between grids
 
 Features:
-- Scroll between boards with scroll wheel?
 - Zen mode?
 - Countdown timer before game begins?
 - Separate leaderboards for Daily / All Time?
@@ -18,4 +16,8 @@ Bugs:
 
 Deploying:
 - check that everything works in HTML5
-- make server more stable?
+- Set up nginx + Let's Encrypt cert on server (so we can send from itch.io)
+
+Done:
+- Improve tweening of grids
+- Scroll between boards with scroll wheel?
