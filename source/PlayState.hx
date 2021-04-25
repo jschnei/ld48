@@ -35,7 +35,7 @@ class PlayState extends FlxState
 
 		reset();
 
-		_hud = new HUD(Registry.TIME_LIMIT, 260, 50);
+		_hud = new HUD(Registry.TIME_LIMIT, 260, 20);
 		add(_hud);
 
 		super.create();

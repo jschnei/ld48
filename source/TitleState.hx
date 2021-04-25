@@ -22,7 +22,7 @@ class TitleState extends FlxState
 		addBackground();
 
 		_titleText = new FlxText(0, 220, Registry.WINDOW_WIDTH, TITLE);
-		_titleText.setFormat(AssetPaths.Action_Man__ttf, 48, FlxColor.WHITE, FlxTextAlign.CENTER);
+		_titleText.setFormat(Registry.fontSource, 48, FlxColor.WHITE, FlxTextAlign.CENTER);
 		add(_titleText);
 
 		var insString = "The objective is to mine for treasure!\n
@@ -32,11 +32,11 @@ class TitleState extends FlxState
 		As you go deeper, there's better treasure to be found and more points to be gained!
 		";
 		_insText = new FlxText(0, 300, Registry.WINDOW_WIDTH, insString);
-		_insText.setFormat(AssetPaths.Action_Man__ttf, 16, FlxColor.WHITE, FlxTextAlign.CENTER);
+		_insText.setFormat(Registry.fontSource, 16, FlxColor.WHITE, FlxTextAlign.CENTER);
 		add(_insText);
 
 		_startText = new FlxText(0, 680, Registry.WINDOW_WIDTH, "Start game");
-		_startText.setFormat(AssetPaths.Action_Man__ttf, 32, FlxColor.WHITE, FlxTextAlign.CENTER);
+		_startText.setFormat(Registry.fontSource, 32, FlxColor.WHITE, FlxTextAlign.CENTER);
 		add(_startText);
 
 		MusicUtils.playMusic(AssetPaths.fruitbox__ogg, 0);

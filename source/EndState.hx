@@ -23,7 +23,7 @@ class EndState extends FlxState
 		super.create();
 
 		_scoreText = new FlxText(0, 100, Registry.WINDOW_WIDTH);
-		_scoreText.setFormat(AssetPaths.Action_Man__ttf, 24, FlxColor.WHITE, FlxTextAlign.CENTER);
+		_scoreText.setFormat(Registry.fontSource, 24, FlxColor.WHITE, FlxTextAlign.CENTER);
 		_scoreText.text = "You scored " + Registry.score + " points!";
 		add(_scoreText);
 
@@ -32,11 +32,11 @@ class EndState extends FlxState
 		add(_nameInput);
 
 		_submitButton = new FlxText(0, 400, Registry.WINDOW_WIDTH, "Submit score");
-		_submitButton.setFormat(AssetPaths.Action_Man__ttf, 30, FlxColor.WHITE, FlxTextAlign.CENTER);
+		_submitButton.setFormat(Registry.fontSource, 30, FlxColor.WHITE, FlxTextAlign.CENTER);
 		add(_submitButton);
 
 		_playAgainButton = new FlxText(0, 500, Registry.WINDOW_WIDTH);
-		_playAgainButton.setFormat(AssetPaths.Action_Man__ttf, 30, FlxColor.WHITE, FlxTextAlign.CENTER);
+		_playAgainButton.setFormat(Registry.fontSource, 30, FlxColor.WHITE, FlxTextAlign.CENTER);
 		_playAgainButton.text = "Click to play again";
 		add(_playAgainButton);
 	}

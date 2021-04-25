@@ -28,4 +28,6 @@ class Registry
 	public static var name:String = "Anonymous";
 
 	public static var accessible:Bool = false;
+
+	public static var fontSource:String = AssetPaths.Raleway__ttf;
 }
