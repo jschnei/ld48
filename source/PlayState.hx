@@ -67,11 +67,13 @@ class PlayState extends FlxState
 			_game.submitPath();
 		}
 
-		if (FlxG.keys.justPressed.DOWN || FlxG.keys.justPressed.S)
+		// trace(FlxG.mouse.wheel);
+
+		if (FlxG.keys.justPressed.DOWN || FlxG.keys.justPressed.S || FlxG.mouse.wheel < 0)
 		{
 			incrementActiveId();
 		}
-		if (FlxG.keys.justPressed.UP || FlxG.keys.justPressed.W)
+		if (FlxG.keys.justPressed.UP || FlxG.keys.justPressed.W || FlxG.mouse.wheel > 0)
 		{
 			decrementActiveId();
 		}
