@@ -1,7 +1,10 @@
 from flask import Flask, g, render_template, request
+from flask_cors import CORS
 
 import sqlite3
 app = Flask(__name__)
+CORS(app)
+
 
 DATABASE = "data/high_scores.db"
 
