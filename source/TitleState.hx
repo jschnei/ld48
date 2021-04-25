@@ -13,7 +13,7 @@ class TitleState extends FlxState
 
 	private var _background:FlxBackdrop;
 	private var _titleText:FlxText;
-	private var _helpText:FlxText;
+	private var _insText:FlxText;
 	private var _startText:FlxText;
 
 	override public function create()
@@ -29,11 +29,17 @@ class TitleState extends FlxState
 		_titleText.setFormat(AssetPaths.Action_Man__ttf, 48, FlxColor.WHITE, FlxTextAlign.CENTER);
 		add(_titleText);
 
-		_helpText = new FlxText(0, 200, WIDTH, "How to play");
-		_helpText.setFormat(AssetPaths.Action_Man__ttf, 16, FlxColor.WHITE, FlxTextAlign.CENTER);
-		add(_helpText);
+		var insString = "The objective is to go deeper!\n
+		Drag your mouse along three tiles with the first and last matching.\n
+		The middle tile will drop to the next board, and the first and last tile will change color.\n
+		Use UP/DOWN or W/S to move between boards.\n
+		As you go deeper, there's better treasure to be found and more points to be gained!
+		";
+		_insText = new FlxText(0, 250, WIDTH, insString);
+		_insText.setFormat(AssetPaths.Action_Man__ttf, 16, FlxColor.WHITE, FlxTextAlign.CENTER);
+		add(_insText);
 
-		_startText = new FlxText(0, 250, WIDTH, "Start game");
+		_startText = new FlxText(0, 550, WIDTH, "Start game");
 		_startText.setFormat(AssetPaths.Action_Man__ttf, 32, FlxColor.WHITE, FlxTextAlign.CENTER);
 		add(_startText);
 
@@ -43,10 +49,6 @@ class TitleState extends FlxState
 	override public function update(elapsed:Float):Void
 	{
 		super.update(elapsed);
-		if (FlxG.mouse.justPressed && FlxG.mouse.overlaps(_helpText))
-		{
-			//
-		}
 		if (FlxG.mouse.justPressed && FlxG.mouse.overlaps(_startText))
 		{
 			FlxG.switchState(new PlayState());
