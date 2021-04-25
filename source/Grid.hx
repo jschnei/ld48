@@ -98,13 +98,13 @@ class Grid extends FlxSpriteGroup
 		gridTiles[square].changeColorTo(colorId);
 	}
 
-    public function refresh(square:Int)
-    {
-        if(Std.isOfType(gridTiles[square],GridTile))
-        {
-            gridTiles[square].refresh();
-        }
-    }
+	public function refresh(square:Int)
+	{
+		if (gridTiles[square] != null)
+		{
+			gridTiles[square].refresh();
+		}
+	}
 
 	public function deleteTile(square:Int)
 	{
