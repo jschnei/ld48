@@ -17,7 +17,7 @@ class EndState extends FlxState {
 
         _scoreText = new FlxText(0, 0);
         _scoreText.setFormat(AssetPaths.Action_Man__ttf, 48, FlxColor.WHITE, FlxTextAlign.CENTER);
-        _scoreText.text = "You scored " + Registry.score + " point!";
+        _scoreText.text = "You scored " + Registry.score + " points!";
         add(_scoreText);
 
         _playAgainButton = new FlxText(0, 250);
