@@ -2,9 +2,9 @@ package;
 
 import flixel.FlxG;
 import flixel.FlxState;
+import flixel.addons.display.FlxBackdrop;
 import flixel.text.FlxText;
 import flixel.util.FlxColor;
-import flixel.addons.display.FlxBackdrop;
 
 class TitleState extends FlxState
 {
@@ -19,11 +19,11 @@ class TitleState extends FlxState
 	override public function create()
 	{
 		super.create();
-        // _selectSound = FlxG.sound.load(AssetPaths.select__wav, 0.3);
+		// _selectSound = FlxG.sound.load(AssetPaths.select__wav, 0.3);
 
 		// bgColor = new FlxColor(0xFF009900);
-        // _background = new FlxBackdrop(AssetPaths.grass_dark__png);
-        // add(_background);	
+		// _background = new FlxBackdrop(AssetPaths.grass_dark__png);
+		// add(_background);
 
 		_titleText = new FlxText(0, 150, WIDTH, TITLE);
 		_titleText.setFormat(AssetPaths.Action_Man__ttf, 48, FlxColor.WHITE, FlxTextAlign.CENTER);
@@ -33,7 +33,7 @@ class TitleState extends FlxState
 		_helpText.setFormat(AssetPaths.Action_Man__ttf, 16, FlxColor.WHITE, FlxTextAlign.CENTER);
 		add(_helpText);
 
-        _startText = new FlxText(0, 250, WIDTH, "Start game");
+		_startText = new FlxText(0, 250, WIDTH, "Start game");
 		_startText.setFormat(AssetPaths.Action_Man__ttf, 32, FlxColor.WHITE, FlxTextAlign.CENTER);
 		add(_startText);
 

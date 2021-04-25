@@ -2,6 +2,7 @@ package;
 
 import flixel.FlxG;
 import flixel.FlxState;
+import flixel.addons.display.FlxBackdrop;
 import flixel.tweens.FlxTween;
 
 class PlayState extends FlxState
@@ -16,6 +17,7 @@ class PlayState extends FlxState
 	private var next2Grid:Grid;
 	private var _game:Game;
 	private var _hud:HUD;
+	private var _background:FlxBackdrop;
 
 	public var paused:Bool = false;
 
@@ -23,6 +25,9 @@ class PlayState extends FlxState
 
 	override public function create()
 	{
+		_background = new FlxBackdrop(AssetPaths.bg__png);
+		add(_background);
+
 		reset();
 
 		_hud = new HUD(Registry.TIME_LIMIT, 260, 50);
