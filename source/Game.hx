@@ -109,11 +109,7 @@ class Game
 				trace("Unknown rule");
 				return false;
 		}
-<<<<<<< HEAD
         _clearSound.play(true);
-=======
-		_clearSound.play();
->>>>>>> d8e64f1b9ae987ddf582fd392095b2bf63966fd9
 		// passed checks
 		Registry.score += Std.int(Math.pow(3, gridId));
 		var deletedTile = curGrid.tiles[moveTile];
@@ -177,16 +173,9 @@ class Game
 
 	public function submitPath():Void
 	{
-<<<<<<< HEAD
 		if(!doMove(currentPath, activeGrid)){
             _failureSound.play(true);
         }
-=======
-		if (!doMove(currentPath, activeGrid))
-		{
-			_failureSound.play();
-		}
->>>>>>> d8e64f1b9ae987ddf582fd392095b2bf63966fd9
 		clearPath();
 	}
 
@@ -194,11 +183,7 @@ class Game
 	{
 		currentPath.push(square);
 		grids[activeGrid].attachedGrid.setTileHighlight(square, true);
-<<<<<<< HEAD
         _selectSound.play(true);
-=======
-		_selectSound.play();
->>>>>>> d8e64f1b9ae987ddf582fd392095b2bf63966fd9
 	}
 
 	public function deleteTileFromPath(square:Int):Void
