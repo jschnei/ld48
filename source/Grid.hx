@@ -106,7 +106,7 @@ class Grid extends FlxSpriteGroup
 		var y = Std.int(square / gridWidth);
 		var gridTile = new GridTile(this, x, y, colorId);
 		gridTiles[square] = gridTile;
-		add(gridTile);
+		insert(1, gridTile);
 	}
 
 	public function moveTile(fromSquare:Int, toSquare:Int)
