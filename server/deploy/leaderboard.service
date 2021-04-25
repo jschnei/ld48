@@ -2,7 +2,7 @@
 Description=LD48 Leaderboard Server
 
 [Service]
-ExecStart=/usr/bin/python3 -m flask run --host=0.0.0.0 --port=7048
+ExecStart=/usr/local/bin/gunicorn gunicorn --bind 0.0.0.0:7048 app:app
 
 WorkingDirectory=/srv/ld48/server
 
