@@ -1,9 +1,11 @@
 package;
 
+import flixel.tweens.FlxEase;
 import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.group.FlxSpriteGroup;
 import flixel.math.FlxPoint;
+import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
 import flixel.util.FlxSpriteUtil;
 import haxe.ds.Vector;
@@ -80,8 +82,8 @@ class Grid extends FlxSpriteGroup
 	public function getCorner(square:Int):FlxPoint
 	{
 		var corner:FlxPoint = new FlxPoint();
-		corner.x = x + (square % gridWidth) * cellWidth * gridScale;
-		corner.y = y + Std.int(square / gridWidth) * cellHeight * gridScale;
+		corner.x = x + (square % gridWidth) * cellWidth;
+		corner.y = y + Std.int(square / gridWidth) * cellHeight;
 
 		return corner;
 	}
@@ -105,6 +107,14 @@ class Grid extends FlxSpriteGroup
 		var gridTile = new GridTile(this, x, y, colorId);
 		gridTiles[square] = gridTile;
 		add(gridTile);
+	}
+
+	public function moveTile(fromSquare:Int, toSquare:Int) {
+		var newLocation = getCorner(toSquare);
+		var movingTile = gridTiles[fromSquare];
+		gridTiles[toSquare] = movingTile;
+		gridTiles[fromSquare] = null;
+		FlxTween.tween(movingTile, {x: newLocation.x, y: newLocation.y}, 0.1, {ease: FlxEase.cubeIn});
 	}
 
 	public function setTileHighlight(square:Int, highlighted:Bool)
