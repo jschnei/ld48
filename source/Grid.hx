@@ -1,10 +1,10 @@
 package;
 
-import flixel.tweens.FlxEase;
 import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.group.FlxSpriteGroup;
 import flixel.math.FlxPoint;
+import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
 import flixel.util.FlxSpriteUtil;
@@ -39,7 +39,7 @@ class Grid extends FlxSpriteGroup
 
 		gridTiles = new Vector<GridTile>(width * height);
 
-		var xcoord = X + width * CELL_WIDTH * (1-scale) / 2;
+		var xcoord = X + width * CELL_WIDTH * (1 - scale) / 2;
 		super(xcoord, Y);
 
 		gridBase = new GridBase(width, height, scale);
@@ -109,12 +109,22 @@ class Grid extends FlxSpriteGroup
 		add(gridTile);
 	}
 
-	public function moveTile(fromSquare:Int, toSquare:Int) {
+	public function moveTile(fromSquare:Int, toSquare:Int)
+	{
 		var newLocation = getCorner(toSquare);
 		var movingTile = gridTiles[fromSquare];
+		newLocation.x -= (1 - gridScale) * movingTile.width / 2;
+		newLocation.y -= (1 - gridScale) * movingTile.height / 2;
 		gridTiles[toSquare] = movingTile;
 		gridTiles[fromSquare] = null;
-		FlxTween.tween(movingTile, {x: newLocation.x, y: newLocation.y}, 0.1, {ease: FlxEase.cubeIn});
+		FlxTween.tween(movingTile, {x: newLocation.x, y: newLocation.y}, 0.2, {
+			ease: FlxEase.cubeIn,
+			onComplete: function(tween:FlxTween)
+			{
+				movingTile.x = newLocation.x;
+				movingTile.y = newLocation.y;
+			}
+		});
 	}
 
 	public function setTileHighlight(square:Int, highlighted:Bool)
