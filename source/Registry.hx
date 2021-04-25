@@ -17,8 +17,10 @@ class Registry
 	public static var REGENERATE_TILES:Bool = true;
 
 	public static var TIME_LIMIT:Float = 120;
-	
+
+	public static var SUBMIT_SCORE_URL:String = "http://localhost:5000/submit_score";
+
 	public static var score:Int = 0;
 
-    public static var accessible:Bool = false;
+	public static var accessible:Bool = false;
 }
