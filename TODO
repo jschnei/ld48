@@ -6,8 +6,11 @@ Aesthetics/Polish:
 
 Features:
 - Scroll between boards with scroll wheel?
-- Countdown timer before game begins?
 - Zen mode?
+- Countdown timer before game begins?
 - Separate leaderboards for Daily / All Time?
     - Separate leaderboard for Zen mode (daily challenge?)
 - slightly more complicated anti-cheat?
+
+Deploying:
+- check that everything works in HTML5
