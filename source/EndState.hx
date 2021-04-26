@@ -26,21 +26,21 @@ class EndState extends FlxState
 
 		addBackground();
 
-		_scoreText = new FlxText(0, 120, Registry.WINDOW_WIDTH);
+		_scoreText = new FlxText(0, 200, Registry.WINDOW_WIDTH);
 		_scoreText.setFormat(Registry.fontSource, 24, FlxColor.WHITE, FlxTextAlign.CENTER);
 		_scoreText.text = "You scored " + Registry.score + " points!";
 		add(_scoreText);
 
-		_nameInput = new FlxInputText((Registry.WINDOW_WIDTH - NAME_INPUT_WIDTH) / 2, 200, NAME_INPUT_WIDTH, "Anonymous", 16);
+		_nameInput = new FlxInputText((Registry.WINDOW_WIDTH - NAME_INPUT_WIDTH) / 2, 620, NAME_INPUT_WIDTH, "Enter name here", 16);
 		add(_nameInput);
 
-		_submitButton = new FlxText(0, 600, Registry.WINDOW_WIDTH, "Submit score");
+		_submitButton = new FlxText(0, 660, Registry.WINDOW_WIDTH, "Submit score");
 		_submitButton.setFormat(Registry.fontSource, 30, FlxColor.WHITE, FlxTextAlign.CENTER);
 		add(_submitButton);
 
-		_playAgainButton = new FlxText(0, 700, Registry.WINDOW_WIDTH);
+		_playAgainButton = new FlxText(0, 710, Registry.WINDOW_WIDTH);
 		_playAgainButton.setFormat(Registry.fontSource, 30, FlxColor.WHITE, FlxTextAlign.CENTER);
-		_playAgainButton.text = "Click to play again";
+		_playAgainButton.text = "Play again";
 		add(_playAgainButton);
 	}
 
