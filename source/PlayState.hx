@@ -40,6 +40,7 @@ class PlayState extends FlxState
 		_background.loadGraphic(AssetPaths.bigbackground__png, true, Registry.WINDOW_WIDTH, Registry.WINDOW_HEIGHT * 6);
 		_background.animation.add("flicker", [0, 1], 1, true);
 		_background.animation.play("flicker");
+		_background.y = -Registry.BACKGROUND_STARTING_HEIGHT;
 		add(_background);
 
 		reset();
@@ -135,7 +136,7 @@ class PlayState extends FlxState
 			paused = true;
 
 			FlxTween.tween(_background, {
-				y: _background.y - Registry.WINDOW_HEIGHT
+				y: _background.y - Registry.SCROLL_HEIGHT
 			}, 0.2);
 
 			var tempUpGrid = Grid.fromGame(_game, GRID_OFFSET_X, UP_TMP_GRID_OFFSET_Y, curId + 3, UP_TMP_GRID_SCALE, false);
@@ -171,7 +172,7 @@ class PlayState extends FlxState
 			paused = true;
 
 			FlxTween.tween(_background, {
-				y: _background.y + Registry.WINDOW_HEIGHT
+				y: _background.y + Registry.SCROLL_HEIGHT
 			}, 0.2);
 
 			var tempUpGrid = Grid.fromGame(_game, GRID_OFFSET_X, UP_TMP_GRID_OFFSET_Y, curId - 1, 1.25, false);
