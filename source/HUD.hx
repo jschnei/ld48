@@ -23,6 +23,7 @@ class HUD extends FlxSpriteGroup
 
 		_scoreText = new FlxText(0, 0);
 		_scoreText.setFormat(Registry.fontSource, 24, FlxColor.WHITE);
+        _scoreText.borderColor = FlxColor.BLACK;
 		add(_scoreText);
 
 		if (Registry.TIME_ON)
