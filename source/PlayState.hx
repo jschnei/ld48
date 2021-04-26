@@ -19,6 +19,8 @@ class PlayState extends FlxState
 	public static var BOT_GRID_SCALE:Float = 0.5;
 	public static var DOWN_TMP_GRID_SCALE:Float = 0.25;
 
+	public static var FADE_IN_DURATION:Float = 1.0;
+
 	private var activeGrid:Grid;
 	private var nextGrid:Grid;
 	private var next2Grid:Grid;
@@ -26,7 +28,7 @@ class PlayState extends FlxState
 	private var _hud:HUD;
 	private var _background:FlxSprite;
 
-	public var paused:Bool = false;
+	public var paused:Bool = true;
 
 	private var timeStart:Float;
 
@@ -43,7 +45,7 @@ class PlayState extends FlxState
 		_background.y = -Registry.BACKGROUND_STARTING_HEIGHT;
 		add(_background);
 
-		reset();
+		reset(true);
 
 		_hud = new HUD(Registry.TIME_LIMIT, this, 260, 20);
 		add(_hud);
@@ -55,11 +57,11 @@ class PlayState extends FlxState
 		super.create();
 	}
 
-	public function reset()
+	public function reset(?init:Bool = false)
 	{
 		Registry.score = 0;
 		_game = new Game(Registry.GAME_WIDTH, Registry.GAME_HEIGHT);
-		switchActiveId(0);
+		switchActiveId(0, init);
 		timeStart = Date.now().getTime() / 1000;
 	}
 
@@ -201,7 +203,7 @@ class PlayState extends FlxState
 		}
 	}
 
-	public function switchActiveId(gridId:Int)
+	public function switchActiveId(gridId:Int, ?init:Bool = false)
 	{
 		if (activeGrid != null)
 		{
@@ -222,6 +224,24 @@ class PlayState extends FlxState
 		add(nextGrid);
 		add(next2Grid);
 
-		paused = false;
+		if (init)
+		{
+			activeGrid.alpha = 0;
+			nextGrid.alpha = 0;
+			next2Grid.alpha = 0;
+
+			FlxTween.tween(activeGrid, {alpha: 1}, FADE_IN_DURATION, {
+				onComplete: function(tween:FlxTween)
+				{
+					paused = false;
+				}
+			});
+			FlxTween.tween(nextGrid, {alpha: 1}, FADE_IN_DURATION);
+			FlxTween.tween(next2Grid, {alpha: 1}, FADE_IN_DURATION);
+		}
+		else
+		{
+			paused = false;
+		}
 	}
 }
