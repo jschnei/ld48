@@ -17,6 +17,7 @@ class TitleState extends FlxState
 	private var _titleText:FlxText;
 	private var _insText:FlxText;
 	private var _startText:FlxText;
+	private var _startUntimedText:FlxText;
 
 	private var _tileSprites:FlxSpriteGroup;
 
@@ -30,11 +31,7 @@ class TitleState extends FlxState
 		_titleText.setFormat(Registry.fontSource, 48, FlxColor.WHITE, FlxTextAlign.CENTER);
 		add(_titleText);
 
-		var insString = "The objective is to mine for treasure!
-		Drag your mouse along three tiles with the first and last matching.\n\n
-		The middle tile will drop to the next board, and the first and last tile will change color.
-		Use UP/DOWN, W/S, or the scroll wheel to move between boards.
-		As you go deeper, there's better treasure to be found and more points to be gained!";
+		var insString = "The objective is to mine for treasure!\n\nDrag your mouse along three tiles with the first and last matching.\n\n\n\nThe middle tile will drop to the next board, and the first and last tile will change color.\n\nUse UP/DOWN, W/S, or the scroll wheel to move between boards.\n\nAs you go deeper, there's better treasure to be found and more points to be gained!";
 		_insText = new FlxText(0, 280, Registry.WINDOW_WIDTH, insString);
 		_insText.setFormat(Registry.fontSource, 16, FlxColor.WHITE, FlxTextAlign.CENTER);
 		add(_insText);
@@ -45,38 +42,63 @@ class TitleState extends FlxState
 		_startText.setFormat(Registry.fontSource, 32, FlxColor.WHITE, FlxTextAlign.CENTER);
 		add(_startText);
 
+		_startUntimedText = new FlxText(0, 710, Registry.WINDOW_WIDTH, "Start untimed game");
+		_startUntimedText.setFormat(Registry.fontSource, 16, FlxColor.WHITE, FlxTextAlign.CENTER);
+		add(_startUntimedText);
+
 		MusicUtils.playMusic(AssetPaths.fruitbox__ogg, 0);
 	}
 
 	override public function update(elapsed:Float):Void
 	{
 		super.update(elapsed);
-		if (FlxG.mouse.overlaps(_startText)) {
+		if (FlxG.mouse.overlaps(_startText))
+		{
 			_startText.color = FlxColor.ORANGE;
-		} else {
+			if (FlxG.mouse.justPressed)
+			{
+				Registry.setMode(Registry.GameMode.ARCADE);
+				transitionToGameStart();
+			}
+		}
+		else
+		{
 			_startText.color = FlxColor.WHITE;
 		}
-		if (FlxG.mouse.justPressed && FlxG.mouse.overlaps(_startText))
+
+		if (FlxG.mouse.overlaps(_startUntimedText))
 		{
-			// Registry.setMode(Registry.GameMode.UNTIMED);
-			transitionToGameStart();
+			_startUntimedText.color = FlxColor.ORANGE;
+			if (FlxG.mouse.justPressed)
+			{
+				Registry.setMode(Registry.GameMode.UNTIMED);
+				transitionToGameStart();
+			}
+		}
+		else
+		{
+			_startUntimedText.color = FlxColor.WHITE;
 		}
 	}
 
-	public function transitionToGameStart():Void {
-		for (text in [_titleText, _insText, _startText]) {
+	public function transitionToGameStart():Void
+	{
+		for (text in [_titleText, _insText, _startText])
+		{
 			FlxTween.tween(text, {alpha: 0, y: text.y - Registry.BACKGROUND_STARTING_HEIGHT}, 1, {
 				ease: FlxEase.sineOut
 			});
 		}
-		for (sprite in _tileSprites) {
+		for (sprite in _tileSprites)
+		{
 			FlxTween.tween(sprite, {alpha: 0, y: sprite.y - Registry.BACKGROUND_STARTING_HEIGHT}, 1, {
 				ease: FlxEase.sineOut
 			});
 		}
 		FlxTween.tween(_background, {y: -Registry.BACKGROUND_STARTING_HEIGHT}, 1, {
 			ease: FlxEase.sineOut,
-			onComplete: function(tween: FlxTween) {
+			onComplete: function(tween:FlxTween)
+			{
 				FlxG.switchState(new PlayState());
 			}
 		});
@@ -101,37 +123,22 @@ class TitleState extends FlxState
 		var xOffset = 80;
 
 		// Center horizontal strip
-		loadTileGraphics(
-			new FlxSprite((Registry.WINDOW_WIDTH - 3 * Grid.CELL_WIDTH) / 2, y),
-			new FlxSprite((Registry.WINDOW_WIDTH - Grid.CELL_WIDTH) / 2, y),
-			new FlxSprite((Registry.WINDOW_WIDTH + Grid.CELL_WIDTH) / 2, y),
-			AssetPaths.bluea__png,
-			AssetPaths.purplea__png);
+		loadTileGraphics(new FlxSprite((Registry.WINDOW_WIDTH - 3 * Grid.CELL_WIDTH) / 2, y), new FlxSprite((Registry.WINDOW_WIDTH - Grid.CELL_WIDTH) / 2, y),
+			new FlxSprite((Registry.WINDOW_WIDTH + Grid.CELL_WIDTH) / 2, y), AssetPaths.bluea__png, AssetPaths.purplea__png);
 
 		// Right 'L', all same colors
-		loadTileGraphics(
-			new FlxSprite(Registry.WINDOW_WIDTH / 2 + xOffset, y + yOffset),
+		loadTileGraphics(new FlxSprite(Registry.WINDOW_WIDTH / 2 + xOffset, y + yOffset),
 			new FlxSprite(Registry.WINDOW_WIDTH / 2 + xOffset + Grid.CELL_WIDTH, y + yOffset),
-			new FlxSprite(Registry.WINDOW_WIDTH / 2 + xOffset + Grid.CELL_WIDTH, y + yOffset - Grid.CELL_HEIGHT),
-			AssetPaths.reda__png,
-			AssetPaths.reda__png);
-		
-		// Left 'L'
-		loadTileGraphics(
-			new FlxSprite(Registry.WINDOW_WIDTH / 2 - xOffset - Grid.CELL_WIDTH, y + yOffset),
-			new FlxSprite(Registry.WINDOW_WIDTH / 2 - xOffset - Grid.CELL_WIDTH, y + yOffset - Grid.CELL_HEIGHT),
-			new FlxSprite(Registry.WINDOW_WIDTH / 2 - xOffset - Grid.CELL_WIDTH * 2, y + yOffset - Grid.CELL_HEIGHT),
-			AssetPaths.greena__png,
-			AssetPaths.yellowa__png);
+			new FlxSprite(Registry.WINDOW_WIDTH / 2 + xOffset + Grid.CELL_WIDTH, y + yOffset - Grid.CELL_HEIGHT), AssetPaths.reda__png, AssetPaths.reda__png);
 
+		// Left 'L'
+		loadTileGraphics(new FlxSprite(Registry.WINDOW_WIDTH / 2 - xOffset - Grid.CELL_WIDTH, y + yOffset),
+			new FlxSprite(Registry.WINDOW_WIDTH / 2 - xOffset - Grid.CELL_WIDTH, y + yOffset - Grid.CELL_HEIGHT),
+			new FlxSprite(Registry.WINDOW_WIDTH / 2 - xOffset - Grid.CELL_WIDTH * 2, y + yOffset - Grid.CELL_HEIGHT), AssetPaths.greena__png,
+			AssetPaths.yellowa__png);
 	}
 
-	private function loadTileGraphics(
-		sprite1:FlxSprite,
-		sprite2:FlxSprite,
-		sprite3:FlxSprite,
-		colorA:String,
-		colorB:String):Void
+	private function loadTileGraphics(sprite1:FlxSprite, sprite2:FlxSprite, sprite3:FlxSprite, colorA:String, colorB:String):Void
 	{
 		sprite1.loadGraphic(colorA, false, Grid.CELL_WIDTH, Grid.CELL_HEIGHT);
 		add(sprite1);
