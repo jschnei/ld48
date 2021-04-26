@@ -4,6 +4,8 @@ import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.text.FlxText;
+import flixel.tweens.FlxEase;
+import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
 
 class TitleState extends FlxState
@@ -53,14 +55,28 @@ class TitleState extends FlxState
 		if (FlxG.mouse.justPressed && FlxG.mouse.overlaps(_startText))
 		{
 			// Registry.setMode(Registry.GameMode.UNTIMED);
-			FlxG.switchState(new PlayState());
+			transitionToGameStart();
 		}
+	}
+
+	public function transitionToGameStart():Void {
+		for (text in [_titleText, _insText, _startText]) {
+			FlxTween.tween(text, {alpha: 0, y: text.y - Registry.BACKGROUND_STARTING_HEIGHT}, 1, {
+				ease: FlxEase.sineOut
+			});
+		}
+		FlxTween.tween(_background, {y: -Registry.BACKGROUND_STARTING_HEIGHT}, 1, {
+			ease: FlxEase.sineOut,
+			onComplete: function(tween: FlxTween) {
+				FlxG.switchState(new PlayState());
+			}
+		});
 	}
 
 	private function addBackground():Void
 	{
 		_background = new FlxSprite();
-		_background.loadGraphic(AssetPaths.main__png, true, Registry.WINDOW_WIDTH, Registry.WINDOW_HEIGHT);
+		_background.loadGraphic(AssetPaths.bigbackground__png, true, Registry.WINDOW_WIDTH, Registry.WINDOW_HEIGHT * 6);
 		var flicker = "flicker";
 		_background.animation.add(flicker, [0, 1], 1, true);
 		_background.animation.play(flicker);

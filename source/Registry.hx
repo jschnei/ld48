@@ -22,6 +22,9 @@ class Registry
 	public static var WINDOW_WIDTH:Int = 400;
 	public static var WINDOW_HEIGHT:Int = 800;
 
+	public static var BACKGROUND_STARTING_HEIGHT:Int = 600;
+	public static var SCROLL_HEIGHT:Int = 800;
+
 	public static var GAME_RULE:GameRule = SANDWICH;
 	public static var REGENERATE_TILES:Bool = true;
 
