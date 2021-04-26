@@ -28,7 +28,7 @@ class HUD extends FlxSpriteGroup
 
 		if (Registry.TIME_ON)
 		{
-			_timer = new FlxBar(40, 35, FlxBarFillDirection.BOTTOM_TO_TOP, 10, 300);
+			_timer = new FlxBar(45, 35, FlxBarFillDirection.BOTTOM_TO_TOP, 10, 290);
 			_timer.createColoredEmptyBar(FlxColor.BLACK, true);
 			_timer.createColoredFilledBar(FlxColor.WHITE);
 			_timer.setRange(0, timeLimit);

@@ -44,16 +44,34 @@ class EndState extends FlxState
 	override public function update(elapsed:Float):Void
 	{
 		super.update(elapsed);
-		if (FlxG.mouse.justPressed && FlxG.mouse.overlaps(_submitButton))
+
+		if (FlxG.mouse.overlaps(_submitButton))
 		{
-			if (!_submitted)
-				submitScore();
+			_submitButton.color = FlxColor.ORANGE;
+			if (FlxG.mouse.justPressed)
+			{
+				if (!_submitted)
+					submitScore();
 				_submitted = true;
 				_submitButton.text = "Submitted!";
+			}
 		}
-		if (FlxG.mouse.justPressed && FlxG.mouse.overlaps(_playAgainButton))
+		else
 		{
-			FlxG.switchState(new TitleState());
+			_submitButton.color = FlxColor.WHITE;
+		}
+
+		if (FlxG.mouse.overlaps(_playAgainButton))
+		{
+			_playAgainButton.color = FlxColor.ORANGE;
+			if (FlxG.mouse.justPressed)
+			{
+				FlxG.switchState(new TitleState());
+			}
+		}
+		else
+		{
+			_playAgainButton.color = FlxColor.WHITE;
 		}
 	}
 
