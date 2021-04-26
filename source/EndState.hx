@@ -48,12 +48,21 @@ class EndState extends FlxState
 		{
 			if (!_submitted)
 				submitScore();
-				_submitted = true;
-				_submitButton.text = "Submitted!";
+			_submitted = true;
+			_submitButton.text = "Submitted!";
 		}
-		if (FlxG.mouse.justPressed && FlxG.mouse.overlaps(_playAgainButton))
+
+		if (FlxG.mouse.overlaps(_playAgainButton))
 		{
-			FlxG.switchState(new TitleState());
+			_playAgainButton.color = FlxColor.ORANGE;
+			if (FlxG.mouse.justPressed)
+			{
+				FlxG.switchState(new TitleState());
+			}
+		}
+		else
+		{
+			_playAgainButton.color = FlxColor.WHITE;
 		}
 	}
 
