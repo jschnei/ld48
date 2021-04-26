@@ -3,6 +3,7 @@ package;
 import flixel.FlxSprite;
 import flixel.group.FlxSpriteGroup;
 import flixel.text.FlxText;
+import flixel.tweens.FlxTween;
 import flixel.ui.FlxBar;
 import flixel.ui.FlxButton;
 import flixel.util.FlxColor;
@@ -24,6 +25,7 @@ class HUD extends FlxSpriteGroup
 		_scoreText = new FlxText(0, 0);
 		_scoreText.setFormat(Registry.fontSource, 24, FlxColor.WHITE);
         _scoreText.borderColor = FlxColor.BLACK;
+        _scoreText.text = "Score: 0";
 		add(_scoreText);
 
 		if (Registry.TIME_ON)
@@ -32,6 +34,7 @@ class HUD extends FlxSpriteGroup
 			_timer.createColoredEmptyBar(FlxColor.BLACK, true);
 			_timer.createColoredFilledBar(FlxColor.WHITE);
 			_timer.setRange(0, timeLimit);
+            _timer.value = timeLimit;
 			add(_timer);
 		}
 
@@ -51,4 +54,11 @@ class HUD extends FlxSpriteGroup
 	{
 		_timer.value = timeLeft;
 	}
+
+    public function fadeIn(duration:Float) {
+        _scoreText.alpha = 0;
+        _timer.alpha = 0;
+        FlxTween.tween(_scoreText, {alpha: 1}, duration);
+        FlxTween.tween(_timer, {alpha: 1}, duration);
+    }
 }

@@ -19,7 +19,7 @@ class PlayState extends FlxState
 	public static var BOT_GRID_SCALE:Float = 0.5;
 	public static var DOWN_TMP_GRID_SCALE:Float = 0.25;
 
-	public static var FADE_IN_DURATION:Float = 1.0;
+	public static var FADE_IN_DURATION:Float = 0.5;
 
 	private var activeGrid:Grid;
 	private var nextGrid:Grid;
@@ -49,6 +49,7 @@ class PlayState extends FlxState
 
 		_hud = new HUD(Registry.TIME_LIMIT, this, 260, 20);
 		add(_hud);
+		_hud.fadeIn(FADE_IN_DURATION);
 
 		_shiftDownSound = FlxG.sound.load(AssetPaths.shiftdown__wav, 0.3);
 		_shiftUpSound = FlxG.sound.load(AssetPaths.shiftup__wav, 0.3);
