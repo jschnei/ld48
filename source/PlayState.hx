@@ -3,6 +3,7 @@ package;
 import flixel.FlxG;
 import flixel.FlxState;
 import flixel.addons.display.FlxBackdrop;
+import flixel.system.FlxSound;
 import flixel.tweens.FlxTween;
 
 class PlayState extends FlxState
@@ -28,6 +29,10 @@ class PlayState extends FlxState
 
 	private var timeStart:Float;
 
+	private var _shiftDownSound:FlxSound;
+	private var _shiftUpSound:FlxSound;
+	private var _failureSound:FlxSound;
+
 	override public function create()
 	{
 		_background = new FlxBackdrop(AssetPaths.bg__png);
@@ -37,6 +42,10 @@ class PlayState extends FlxState
 
 		_hud = new HUD(Registry.TIME_LIMIT, this, 260, 20);
 		add(_hud);
+
+		_shiftDownSound = FlxG.sound.load(AssetPaths.shiftdown__wav, 0.3);
+		_shiftUpSound = FlxG.sound.load(AssetPaths.shiftup__wav, 0.3);
+		_failureSound = FlxG.sound.load(AssetPaths.shiftfailure__wav, 0.2);
 
 		super.create();
 	}
@@ -118,6 +127,7 @@ class PlayState extends FlxState
 		var curId = _game.activeGrid;
 		if (curId + 3 < _game.grids.length)
 		{
+			_shiftDownSound.play();
 			paused = true;
 
 			var tempUpGrid = Grid.fromGame(_game, GRID_OFFSET_X, UP_TMP_GRID_OFFSET_Y, curId + 3, UP_TMP_GRID_SCALE, false);
@@ -138,6 +148,9 @@ class PlayState extends FlxState
 				remove(tempDownGrid);
 			});
 		}
+		else {
+			_failureSound.play();
+		}
 	}
 
 	public function decrementActiveId()
@@ -145,6 +158,7 @@ class PlayState extends FlxState
 		var curId = _game.activeGrid;
 		if (curId - 1 >= 0)
 		{
+			_shiftUpSound.play();
 			paused = true;
 
 			var tempUpGrid = Grid.fromGame(_game, GRID_OFFSET_X, UP_TMP_GRID_OFFSET_Y, curId - 1, 1.25, false);
@@ -166,6 +180,9 @@ class PlayState extends FlxState
 
 			activeGrid.tweenToGrid(nextGrid);
 			nextGrid.tweenToGrid(next2Grid);
+		}
+		else {
+			_failureSound.play();
 		}
 	}
 
