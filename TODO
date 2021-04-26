@@ -1,7 +1,6 @@
 Aesthetics/Polish:
 - Art for game screen
 - Art for ending screen
-- Improve tweening of grids
 - Sound effect for shifting between grids
 
 Features:
@@ -9,7 +8,7 @@ Features:
 - Countdown timer before game begins?
 - Separate leaderboards for Daily / All Time?
     - Separate leaderboard for Zen mode (daily challenge?)
-- slightly more complicated anti-cheat?
+- slightly more complicated anti-cheat? (very low priority)
 
 Bugs:
 - Textfield is kinda janky on HTML5
