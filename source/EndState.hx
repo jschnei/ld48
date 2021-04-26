@@ -32,7 +32,6 @@ class EndState extends FlxState
 		add(_scoreText);
 
 		_nameInput = new FlxInputText((Registry.WINDOW_WIDTH - NAME_INPUT_WIDTH) / 2, 200, NAME_INPUT_WIDTH, "Anonymous", 16);
-		_nameInput.alignment = FlxTextAlign.CENTER;
 		add(_nameInput);
 
 		_submitButton = new FlxText(0, 600, Registry.WINDOW_WIDTH, "Submit score");
