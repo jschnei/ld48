@@ -202,17 +202,23 @@ class Grid extends FlxSpriteGroup
 		remove(_pointsText);
 		insert(members.length - 1, _pointsText);
 		// Higher points look more exciting
-		if (points < 10) {
-			_pointsText.size = 18;
-			_pointsText.color = FlxColor.WHITE;
-		} else if (points < 28) {
-			_pointsText.size = 18;
-			_pointsText.color = FlxColor.CYAN;
-		} else if (points < 82) {
+		if (points <= 1) {
+			_pointsText.size = 20;
+			_pointsText.color = FlxColor.fromRGB(255, 100, 100);
+		} else if (points <= 3) {
+			_pointsText.size = 20;
+			_pointsText.color = FlxColor.fromRGB(100, 100, 255);
+		} else if (points <= 9) {
+			_pointsText.size = 20;
+			_pointsText.color = FlxColor.LIME;
+		} else if (points <= 27) {
 			_pointsText.size = 24;
-			_pointsText.color = FlxColor.ORANGE;
-		} else {
+			_pointsText.color = FlxColor.YELLOW;
+		} else if (points <= 81) {
 			_pointsText.size = 30;
+			_pointsText.color = FlxColor.RED;
+		} else {
+			_pointsText.size = 36;
 			_pointsText.color = FlxColor.RED;
 		}
 		_pointsText.text = "+" + points;
@@ -223,9 +229,21 @@ class Grid extends FlxSpriteGroup
 		if (_pointsTween != null) {
 			_pointsTween.cancel();
 		}
-		_pointsTween = FlxTween.tween(_pointsText, {y: location.y - 20, alpha: 0}, 0.35, {
+		_pointsTween = FlxTween.tween(_pointsText, {y: location.y - 20, alpha: 0}, 0.37, {
 			onComplete: finishPointsTween
 		});
+		// Rainbow effect for 81 points or more
+		if (points >= 81) {
+			var color1 = FlxColor.fromRGB(255, 80, 80);
+			var color2 = FlxColor.fromRGB(80, 255, 80, 170);
+			var color3 = FlxColor.fromRGB(80, 80, 255, 85);
+			var color4 = FlxColor.fromRGB(255, 80, 80, 0);
+			FlxTween.color(_pointsText, 0.12, color1, color2, {ease: FlxEase.linear}).then(
+				FlxTween.color(_pointsText, 0.12, color2, color3, {ease: FlxEase.linear}).then(
+					FlxTween.color(_pointsText, 0.12, color3, color4, {ease: FlxEase.linear})
+				)
+			);
+		}
 	}
 
 	public function finishPointsTween(tween:FlxTween) {
