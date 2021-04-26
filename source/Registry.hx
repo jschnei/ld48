@@ -36,6 +36,7 @@ class Registry
 
 	public static var score:Int = 0;
 	public static var name:String = "Anonymous";
+	public static var randomSeed:Int = 0;
 
 	public static var accessible:Bool = false;
 

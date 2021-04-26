@@ -83,7 +83,7 @@ class TitleState extends FlxState
 
 	public function transitionToGameStart():Void
 	{
-		for (text in [_titleText, _insText, _startText])
+		for (text in [_titleText, _insText, _startText, _startUntimedText])
 		{
 			FlxTween.tween(text, {alpha: 0, y: text.y - Registry.BACKGROUND_STARTING_HEIGHT}, 1, {
 				ease: FlxEase.sineOut

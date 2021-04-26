@@ -21,7 +21,8 @@ class Game
 
 	public function new(width:Int, height:Int)
 	{
-		rand = new FlxRandom(Std.int(Date.now().getTime() / 1000));
+		Registry.randomSeed = Std.int(Date.now().getTime() / 1000);
+		rand = new FlxRandom(Registry.randomSeed);
 
 		this.width = width;
 		this.height = height;
@@ -109,7 +110,7 @@ class Game
 				trace("Unknown rule");
 				return false;
 		}
-        _clearSound.play(true);
+		_clearSound.play(true);
 		// passed checks
 		var points = Std.int(Math.pow(3, gridId));
 		Registry.score += points;
@@ -177,9 +178,10 @@ class Game
 	{
 		if (currentPath.length == 0)
 			return;
-		if(!doMove(currentPath, activeGrid)){
-            _failureSound.play(true);
-        }
+		if (!doMove(currentPath, activeGrid))
+		{
+			_failureSound.play(true);
+		}
 		clearPath();
 	}
 
@@ -187,7 +189,7 @@ class Game
 	{
 		currentPath.push(square);
 		grids[activeGrid].attachedGrid.setTileHighlight(square, true);
-        _selectSound.play(true);
+		_selectSound.play(true);
 	}
 
 	public function deleteTileFromPath(square:Int):Void
@@ -213,14 +215,14 @@ class Game
 			grids[activeGrid + 1].attachedGrid = null;
 	}
 
-    public function refreshTiles()
-    {
-        for(grid in grids)
-        {
-            for (i in 0...(width * height))
-            {
-                grid.refresh(i);
-            }
-        }
-    }
+	public function refreshTiles()
+	{
+		for (grid in grids)
+		{
+			for (i in 0...(width * height))
+			{
+				grid.refresh(i);
+			}
+		}
+	}
 }
