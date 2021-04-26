@@ -1,6 +1,7 @@
 package;
 
 import flixel.FlxG;
+import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.addons.display.FlxBackdrop;
 import flixel.system.FlxSound;
@@ -23,7 +24,7 @@ class PlayState extends FlxState
 	private var next2Grid:Grid;
 	private var _game:Game;
 	private var _hud:HUD;
-	private var _background:FlxBackdrop;
+	private var _background:FlxSprite;
 
 	public var paused:Bool = false;
 
@@ -35,7 +36,10 @@ class PlayState extends FlxState
 
 	override public function create()
 	{
-		_background = new FlxBackdrop(AssetPaths.bigbackground__png);
+		_background = new FlxSprite();
+		_background.loadGraphic(AssetPaths.bigbackground__png, true, Registry.WINDOW_WIDTH, Registry.WINDOW_HEIGHT * 6);
+		_background.animation.add("flicker", [0, 1], 1, true);
+		_background.animation.play("flicker");
 		add(_background);
 
 		reset();
@@ -152,7 +156,8 @@ class PlayState extends FlxState
 				remove(tempDownGrid);
 			});
 		}
-		else {
+		else
+		{
 			_failureSound.play();
 		}
 	}
@@ -189,7 +194,8 @@ class PlayState extends FlxState
 			activeGrid.tweenToGrid(nextGrid);
 			nextGrid.tweenToGrid(next2Grid);
 		}
-		else {
+		else
+		{
 			_failureSound.play();
 		}
 	}
