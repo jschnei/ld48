@@ -3,6 +3,7 @@ package;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
+import flixel.group.FlxSpriteGroup;
 import flixel.text.FlxText;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
@@ -17,6 +18,8 @@ class TitleState extends FlxState
 	private var _insText:FlxText;
 	private var _startText:FlxText;
 
+	private var _tileSprites:FlxSpriteGroup;
+
 	override public function create()
 	{
 		super.create();
@@ -30,7 +33,7 @@ class TitleState extends FlxState
 		var insString = "The objective is to mine for treasure!
 		Drag your mouse along three tiles with the first and last matching.\n\n
 		The middle tile will drop to the next board, and the first and last tile will change color.
-		Use UP/DOWN or W/S to move between boards.
+		Use UP/DOWN, W/S, or the scroll wheel to move between boards.
 		As you go deeper, there's better treasure to be found and more points to be gained!";
 		_insText = new FlxText(0, 280, Registry.WINDOW_WIDTH, insString);
 		_insText.setFormat(Registry.fontSource, 16, FlxColor.WHITE, FlxTextAlign.CENTER);
@@ -66,6 +69,11 @@ class TitleState extends FlxState
 				ease: FlxEase.sineOut
 			});
 		}
+		for (sprite in _tileSprites) {
+			FlxTween.tween(sprite, {alpha: 0, y: sprite.y - Registry.BACKGROUND_STARTING_HEIGHT}, 1, {
+				ease: FlxEase.sineOut
+			});
+		}
 		FlxTween.tween(_background, {y: -Registry.BACKGROUND_STARTING_HEIGHT}, 1, {
 			ease: FlxEase.sineOut,
 			onComplete: function(tween: FlxTween) {
@@ -86,17 +94,35 @@ class TitleState extends FlxState
 
 	private function addTileImages():Void
 	{
+		_tileSprites = new FlxSpriteGroup();
 		var y = 370;
+		// Offsets for 'L' shapes
+		var yOffset = 10;
+		var xOffset = 80;
 
+		// Center horizontal strip
 		loadTileGraphics(
+			new FlxSprite((Registry.WINDOW_WIDTH - 3 * Grid.CELL_WIDTH) / 2, y),
 			new FlxSprite((Registry.WINDOW_WIDTH - Grid.CELL_WIDTH) / 2, y),
-			new FlxSprite(x + Grid.CELL_WIDTH, y),
-			new FlxSprite(x + 2 * Grid.CELL_WIDTH, y),
+			new FlxSprite((Registry.WINDOW_WIDTH + Grid.CELL_WIDTH) / 2, y),
 			AssetPaths.bluea__png,
 			AssetPaths.purplea__png);
 
-		colorA = AssetPaths.reda__png;
-		colorB = AssetPaths.yellowa__png;
+		// Right 'L', all same colors
+		loadTileGraphics(
+			new FlxSprite(Registry.WINDOW_WIDTH / 2 + xOffset, y + yOffset),
+			new FlxSprite(Registry.WINDOW_WIDTH / 2 + xOffset + Grid.CELL_WIDTH, y + yOffset),
+			new FlxSprite(Registry.WINDOW_WIDTH / 2 + xOffset + Grid.CELL_WIDTH, y + yOffset - Grid.CELL_HEIGHT),
+			AssetPaths.reda__png,
+			AssetPaths.reda__png);
+		
+		// Left 'L'
+		loadTileGraphics(
+			new FlxSprite(Registry.WINDOW_WIDTH / 2 - xOffset - Grid.CELL_WIDTH, y + yOffset),
+			new FlxSprite(Registry.WINDOW_WIDTH / 2 - xOffset - Grid.CELL_WIDTH, y + yOffset - Grid.CELL_HEIGHT),
+			new FlxSprite(Registry.WINDOW_WIDTH / 2 - xOffset - Grid.CELL_WIDTH * 2, y + yOffset - Grid.CELL_HEIGHT),
+			AssetPaths.greena__png,
+			AssetPaths.yellowa__png);
 
 	}
 
@@ -104,14 +130,17 @@ class TitleState extends FlxState
 		sprite1:FlxSprite,
 		sprite2:FlxSprite,
 		sprite3:FlxSprite,
-		colorA:FlxGraphicAsset,
-		colorB:FlxGraphicAsset):Void
+		colorA:String,
+		colorB:String):Void
 	{
 		sprite1.loadGraphic(colorA, false, Grid.CELL_WIDTH, Grid.CELL_HEIGHT);
 		add(sprite1);
+		_tileSprites.add(sprite1);
 		sprite2.loadGraphic(colorB, false, Grid.CELL_WIDTH, Grid.CELL_HEIGHT);
 		add(sprite2);
+		_tileSprites.add(sprite2);
 		sprite3.loadGraphic(colorA, false, Grid.CELL_WIDTH, Grid.CELL_HEIGHT);
 		add(sprite3);
+		_tileSprites.add(sprite3);
 	}
 }
