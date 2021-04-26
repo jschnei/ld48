@@ -1,6 +1,7 @@
 package;
 
 import flixel.FlxG;
+import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.addons.display.FlxBackdrop;
 import flixel.addons.ui.FlxInputText;
@@ -17,12 +18,15 @@ class EndState extends FlxState
 	private var _submitButton:FlxText;
 	private var _submitted:Bool = false;
 	private var _playAgainButton:FlxText;
+    private var _background:FlxSprite;
 
 	override public function create()
 	{
 		super.create();
-
-		_scoreText = new FlxText(0, 100, Registry.WINDOW_WIDTH);
+        
+        addBackground();
+        
+		_scoreText = new FlxText(0, 120, Registry.WINDOW_WIDTH);
 		_scoreText.setFormat(Registry.fontSource, 24, FlxColor.WHITE, FlxTextAlign.CENTER);
 		_scoreText.text = "You scored " + Registry.score + " points!";
 		add(_scoreText);
@@ -31,11 +35,11 @@ class EndState extends FlxState
 		_nameInput.alignment = FlxTextAlign.CENTER;
 		add(_nameInput);
 
-		_submitButton = new FlxText(0, 400, Registry.WINDOW_WIDTH, "Submit score");
+		_submitButton = new FlxText(0, 600, Registry.WINDOW_WIDTH, "Submit score");
 		_submitButton.setFormat(Registry.fontSource, 30, FlxColor.WHITE, FlxTextAlign.CENTER);
 		add(_submitButton);
 
-		_playAgainButton = new FlxText(0, 500, Registry.WINDOW_WIDTH);
+		_playAgainButton = new FlxText(0, 700, Registry.WINDOW_WIDTH);
 		_playAgainButton.setFormat(Registry.fontSource, 30, FlxColor.WHITE, FlxTextAlign.CENTER);
 		_playAgainButton.text = "Click to play again";
 		add(_playAgainButton);
@@ -86,4 +90,14 @@ class EndState extends FlxState
 		}
 		req.request(true);
 	}
+
+    private function addBackground():Void
+    {
+        _background = new FlxSprite();
+        _background.loadGraphic(AssetPaths.endscreen__png, true, Registry.WINDOW_WIDTH, Registry.WINDOW_HEIGHT);
+        var flicker = "flicker";
+        _background.animation.add(flicker, [0, 1], 1, true);
+        _background.animation.play(flicker);
+        add(_background);
+    }
 }
