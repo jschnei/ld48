@@ -46,7 +46,7 @@ class TitleState extends FlxState
 		_startUntimedText.setFormat(Registry.fontSource, 16, FlxColor.WHITE, FlxTextAlign.CENTER);
 		add(_startUntimedText);
 
-		MusicUtils.playMusic(AssetPaths.fruitbox__ogg, 0);
+		MusicUtils.playMusic(AssetPaths.fruitbox__wav, 0);
 	}
 
 	override public function update(elapsed:Float):Void
