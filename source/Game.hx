@@ -175,6 +175,8 @@ class Game
 
 	public function submitPath():Void
 	{
+		if (currentPath.length <= 1)
+			return;
 		if(!doMove(currentPath, activeGrid)){
             _failureSound.play(true);
         }
