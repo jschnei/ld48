@@ -1,11 +1,23 @@
 <html>
+
+<iframe src="http://slime.jschnei.com/ld48/" height="800" width="400" title="LD48 Game"></iframe>
+
 <head>
     <title>LD48 Leaderboard</title>
+
+    <style>
+    iframe {
+        margin: 0 auto;
+        display: block;
+    }
+    </style>
 </head>
 
 <h1>Leaderboard</h1>
 
 <h2>Classic Mode</h2>
+
+<h3>All-Time High Scores</h3>
 
 <ol>
     {% for name, score in high_scores_classic %}
@@ -13,10 +25,28 @@
     {% endfor %}
 </ol>
 
+<h3>Daily High Scores (resets in {{time_til_reset}} hours)</h3>
+
+<ol>
+    {% for name, score in daily_scores_classic %}
+        <li>{{name}} (<b>{{score}}</b>)</li>
+    {% endfor %}
+</ol>
+
 <h2>Untimed Mode</h2>
+
+<h3>All-Time High Scores</h3>
 
 <ol>
     {% for name, score in high_scores_untimed %}
+        <li>{{name}} (<b>{{score}}</b>)</li>
+    {% endfor %}
+</ol>
+
+<h3>Daily High Scores (resets in {{time_til_reset}} hours)</h3>
+
+<ol>
+    {% for name, score in daily_scores_untimed %}
         <li>{{name}} (<b>{{score}}</b>)</li>
     {% endfor %}
 </ol>
