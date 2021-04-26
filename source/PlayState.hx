@@ -35,7 +35,7 @@ class PlayState extends FlxState
 
 		reset();
 
-		_hud = new HUD(Registry.TIME_LIMIT, 260, 20);
+		_hud = new HUD(Registry.TIME_LIMIT, this, 260, 20);
 		add(_hud);
 
 		super.create();
@@ -98,13 +98,18 @@ class PlayState extends FlxState
 		super.update(elapsed);
 	}
 
+	public function endGame()
+	{
+		FlxG.switchState(new EndState());
+	}
+
 	public function updateTime()
 	{
 		var timeElapsed:Float = Date.now().getTime() / 1000 - timeStart;
 		_hud.setTimeLeft(Registry.TIME_LIMIT - timeElapsed);
 		if (timeElapsed > Registry.TIME_LIMIT)
 		{
-			FlxG.switchState(new EndState());
+			endGame();
 		}
 	}
 

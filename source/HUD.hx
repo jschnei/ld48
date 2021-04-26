@@ -4,6 +4,7 @@ import flixel.FlxSprite;
 import flixel.group.FlxSpriteGroup;
 import flixel.text.FlxText;
 import flixel.ui.FlxBar;
+import flixel.ui.FlxButton;
 import flixel.util.FlxColor;
 
 class HUD extends FlxSpriteGroup
@@ -12,9 +13,13 @@ class HUD extends FlxSpriteGroup
 
 	private var _timer:FlxBar;
 
-	public function new(timeLimit:Float, ?X:Float = 0, ?Y:Float = 0)
+	private var _endGame:FlxButton;
+	private var _playState:PlayState;
+
+	public function new(timeLimit:Float, playState:PlayState, ?X:Float = 0, ?Y:Float = 0)
 	{
 		super(X, Y);
+		_playState = playState;
 
 		_scoreText = new FlxText(0, 0);
 		_scoreText.setFormat(Registry.fontSource, 24, FlxColor.WHITE);
@@ -28,6 +33,12 @@ class HUD extends FlxSpriteGroup
 			_timer.setRange(0, timeLimit);
 			add(_timer);
 		}
+
+		_endGame = new FlxButton(0, 725, "End Game", function()
+		{
+			_playState.endGame();
+		});
+		add(_endGame);
 	}
 
 	public function setScore(score:Int)

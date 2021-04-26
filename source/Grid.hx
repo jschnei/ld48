@@ -16,6 +16,8 @@ class Grid extends FlxSpriteGroup
 	public static var CELL_WIDTH:Int = 32;
 	public static var CELL_HEIGHT:Int = 32;
 
+	public static var BG_COLOR:FlxColor = FlxColor.fromRGB(47, 47, 47);
+
 	public static var GRID_TWEEN_DURATION:Float = 0.2;
 
 	// The number of rows and columns, respectively
@@ -236,7 +238,7 @@ class GridBase extends FlxSprite
 	public function new(width:Int, height:Int, gridScale:Float)
 	{
 		super(0, 0);
-		makeGraphic(width * Grid.CELL_WIDTH + 1, height * Grid.CELL_HEIGHT + 1, FlxColor.TRANSPARENT, true);
+		makeGraphic(width * Grid.CELL_WIDTH + 1, height * Grid.CELL_HEIGHT + 1, Grid.BG_COLOR, true);
 
 		for (x in 0...width + 1)
 		{
