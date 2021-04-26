@@ -45,6 +45,11 @@ class TitleState extends FlxState
 	override public function update(elapsed:Float):Void
 	{
 		super.update(elapsed);
+		if (FlxG.mouse.overlaps(_startText)) {
+			_startText.color = FlxColor.ORANGE;
+		} else {
+			_startText.color = FlxColor.WHITE;
+		}
 		if (FlxG.mouse.justPressed && FlxG.mouse.overlaps(_startText))
 		{
 			// Registry.setMode(Registry.GameMode.UNTIMED);
