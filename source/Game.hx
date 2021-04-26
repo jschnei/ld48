@@ -111,7 +111,9 @@ class Game
 		}
         _clearSound.play(true);
 		// passed checks
-		Registry.score += Std.int(Math.pow(3, gridId));
+		var points = Std.int(Math.pow(3, gridId));
+		Registry.score += points;
+		curGrid.attachedGrid.displayPointsPopup(moveTile, points);
 		var deletedTile = curGrid.tiles[moveTile];
 
 		for (i in (0...recolorTiles.length))
