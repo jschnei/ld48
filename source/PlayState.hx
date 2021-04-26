@@ -4,8 +4,10 @@ import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.addons.display.FlxBackdrop;
+import flixel.group.FlxSpriteGroup;
 import flixel.system.FlxSound;
 import flixel.tweens.FlxTween;
+// import haxe.ds.Vector;
 
 class PlayState extends FlxState
 {
@@ -20,6 +22,10 @@ class PlayState extends FlxState
 	public static var DOWN_TMP_GRID_SCALE:Float = 0.25;
 
 	public static var FADE_IN_DURATION:Float = 0.5;
+	public static var SCROLL_DURATION:Float = 0.2;
+
+	private static var NUM_WINDOW_SCROLLS = 8;
+	private static var DEEPER_BACKGROUND_HEIGHT = 900;
 
 	private var activeGrid:Grid;
 	private var nextGrid:Grid;
@@ -27,6 +33,7 @@ class PlayState extends FlxState
 	private var _game:Game;
 	private var _hud:HUD;
 	private var _background:FlxSprite;
+	private var _deeperBackgrounds:FlxSpriteGroup;
 
 	public var paused:Bool = true;
 
@@ -39,11 +46,13 @@ class PlayState extends FlxState
 	override public function create()
 	{
 		_background = new FlxSprite();
-		_background.loadGraphic(AssetPaths.bigbackground__png, true, Registry.WINDOW_WIDTH, Registry.WINDOW_HEIGHT * 6);
+		_background.loadGraphic(AssetPaths.bigbackground__png, true, Registry.WINDOW_WIDTH, Registry.WINDOW_HEIGHT * NUM_WINDOW_SCROLLS);
 		_background.animation.add("flicker", [0, 1], 1, true);
 		_background.animation.play("flicker");
 		_background.y = -Registry.BACKGROUND_STARTING_HEIGHT;
 		add(_background);
+
+		_deeperBackgrounds = new FlxSpriteGroup();
 
 		reset(true);
 
@@ -140,8 +149,32 @@ class PlayState extends FlxState
 
 			FlxTween.tween(_background, {
 				y: _background.y - Registry.SCROLL_HEIGHT
-			}, 0.2);
+			}, SCROLL_DURATION);
 
+			if (curId >= NUM_WINDOW_SCROLLS-2)
+			{
+				var numBackgrounds = _deeperBackgrounds.length;
+				if (numBackgrounds == 0 || _deeperBackgrounds.members[numBackgrounds-1].y < Registry.WINDOW_HEIGHT) {
+					var newBackground = new FlxSprite();
+					newBackground.loadGraphic(
+						AssetPaths.deeperBackground__png,
+						true,
+						Registry.WINDOW_WIDTH,
+						DEEPER_BACKGROUND_HEIGHT);
+					newBackground.animation.add("flicker", [0, 1], 1, true);
+					newBackground.animation.play("flicker");
+					newBackground.y = Registry.WINDOW_HEIGHT;
+					add(newBackground);
+					_deeperBackgrounds.add(newBackground);
+				}
+			}
+			for (sprite in _deeperBackgrounds)
+			{
+				FlxTween.tween(sprite, {
+					y: sprite.y - Registry.SCROLL_HEIGHT
+				}, SCROLL_DURATION);
+			}
+			
 			var tempUpGrid = Grid.fromGame(_game, GRID_OFFSET_X, UP_TMP_GRID_OFFSET_Y, curId + 3, UP_TMP_GRID_SCALE, false);
 			tempUpGrid.alpha = 0;
 
@@ -176,7 +209,13 @@ class PlayState extends FlxState
 
 			FlxTween.tween(_background, {
 				y: _background.y + Registry.SCROLL_HEIGHT
-			}, 0.2);
+			}, SCROLL_DURATION);
+			for (sprite in _deeperBackgrounds)
+			{
+				FlxTween.tween(sprite, {
+					y: sprite.y + Registry.SCROLL_HEIGHT
+				}, SCROLL_DURATION);
+			}
 
 			var tempUpGrid = Grid.fromGame(_game, GRID_OFFSET_X, UP_TMP_GRID_OFFSET_Y, curId - 1, 1.25, false);
 			tempUpGrid.alpha = 0;
