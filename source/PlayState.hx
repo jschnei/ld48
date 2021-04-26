@@ -35,7 +35,7 @@ class PlayState extends FlxState
 
 	override public function create()
 	{
-		_background = new FlxBackdrop(AssetPaths.bg__png);
+		_background = new FlxBackdrop(AssetPaths.bigbackground__png);
 		add(_background);
 
 		reset();
@@ -130,6 +130,10 @@ class PlayState extends FlxState
 			_shiftDownSound.play();
 			paused = true;
 
+			FlxTween.tween(_background, {
+				y: _background.y - Registry.WINDOW_HEIGHT
+			}, 0.2);
+
 			var tempUpGrid = Grid.fromGame(_game, GRID_OFFSET_X, UP_TMP_GRID_OFFSET_Y, curId + 3, UP_TMP_GRID_SCALE, false);
 			tempUpGrid.alpha = 0;
 
@@ -160,6 +164,10 @@ class PlayState extends FlxState
 		{
 			_shiftUpSound.play();
 			paused = true;
+
+			FlxTween.tween(_background, {
+				y: _background.y + Registry.WINDOW_HEIGHT
+			}, 0.2);
 
 			var tempUpGrid = Grid.fromGame(_game, GRID_OFFSET_X, UP_TMP_GRID_OFFSET_Y, curId - 1, 1.25, false);
 			tempUpGrid.alpha = 0;
