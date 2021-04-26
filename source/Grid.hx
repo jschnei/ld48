@@ -4,6 +4,7 @@ import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.group.FlxSpriteGroup;
 import flixel.math.FlxPoint;
+import flixel.text.FlxText;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
@@ -32,6 +33,9 @@ class Grid extends FlxSpriteGroup
 	public var gridBase:GridBase;
 	public var gridTiles:Vector<GridTile>;
 
+	private var _pointsText:FlxText;
+	private var _pointsTween:FlxTween;
+
 	public function new(width:Int, height:Int, ?X:Float = 0, ?Y:Float = 0, ?scale:Float = 1)
 	{
 		gridWidth = width;
@@ -50,6 +54,12 @@ class Grid extends FlxSpriteGroup
 
 		gridBase = new GridBase(width, height, scale);
 		add(gridBase);
+
+		_pointsText = new FlxText();
+		_pointsText.setFormat(Registry.fontSource, 18, FlxColor.WHITE);
+		_pointsText.borderColor = FlxColor.BLACK;
+		_pointsText.alpha = 0;
+		add(_pointsText);
 	}
 
 	public static function fromGame(game:Game, offsetX:Int, offsetY:Int, gridId:Int, ?gridScale:Float = 1.0, ?attachGrids:Bool = true):Grid
@@ -183,6 +193,41 @@ class Grid extends FlxSpriteGroup
 				}
 			}
 		}
+	}
+
+	public function displayPointsPopup(square:Int, points:Int) {
+		// Bring the text to the front
+		remove(_pointsText);
+		insert(members.length - 1, _pointsText);
+		// Higher points look more exciting
+		if (points < 10) {
+			_pointsText.size = 18;
+			_pointsText.color = FlxColor.WHITE;
+		} else if (points < 28) {
+			_pointsText.size = 18;
+			_pointsText.color = FlxColor.CYAN;
+		} else if (points < 82) {
+			_pointsText.size = 24;
+			_pointsText.color = FlxColor.ORANGE;
+		} else {
+			_pointsText.size = 30;
+			_pointsText.color = FlxColor.RED;
+		}
+		_pointsText.text = "+" + points;
+		var location = getCorner(square);
+		_pointsText.x = location.x + (Math.random() * 15) - _pointsText.width/2;
+		_pointsText.y = location.y + (Math.random() * 15) - _pointsText.height/2;
+		_pointsText.alpha = 1.0;
+		if (_pointsTween != null) {
+			_pointsTween.cancel();
+		}
+		_pointsTween = FlxTween.tween(_pointsText, {y: location.y - 20, alpha: 0}, 0.35, {
+			onComplete: finishPointsTween
+		});
+	}
+
+	public function finishPointsTween(tween:FlxTween) {
+		_pointsTween = null;
 	}
 }
 
