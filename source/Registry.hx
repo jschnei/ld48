@@ -6,6 +6,12 @@ enum GameRule
 	PALINDROME;
 }
 
+enum GameMode
+{
+	ARCADE;
+	UNTIMED;
+}
+
 class Registry
 {
 	public static var NUM_COLORS:Int = 6;
@@ -19,6 +25,7 @@ class Registry
 	public static var GAME_RULE:GameRule = SANDWICH;
 	public static var REGENERATE_TILES:Bool = true;
 
+	public static var TIME_ON:Bool = true;
 	public static var TIME_LIMIT:Float = 120;
 
 	// public static var SUBMIT_SCORE_URL:String = "http://localhost:5000/submit_score";
@@ -30,4 +37,20 @@ class Registry
 	public static var accessible:Bool = false;
 
 	public static var fontSource:String = AssetPaths.Raleway__ttf;
+
+	public static function setMode(mode:GameMode)
+	{
+		if (mode == ARCADE)
+		{
+			TIME_ON = true;
+			TIME_LIMIT = 120;
+			REGENERATE_TILES = true;
+		}
+
+		if (mode == UNTIMED)
+		{
+			TIME_ON = false;
+			REGENERATE_TILES = false;
+		}
+	}
 }

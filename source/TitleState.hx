@@ -47,6 +47,7 @@ class TitleState extends FlxState
 		super.update(elapsed);
 		if (FlxG.mouse.justPressed && FlxG.mouse.overlaps(_startText))
 		{
+			// Registry.setMode(Registry.GameMode.UNTIMED);
 			FlxG.switchState(new PlayState());
 		}
 	}
@@ -56,7 +57,7 @@ class TitleState extends FlxState
 		_background = new FlxSprite();
 		_background.loadGraphic(AssetPaths.main__png, true, Registry.WINDOW_WIDTH, Registry.WINDOW_HEIGHT);
 		var flicker = "flicker";
-		_background.animation.add(flicker, [0,1], 1, true);
+		_background.animation.add(flicker, [0, 1], 1, true);
 		_background.animation.play(flicker);
 		add(_background);
 	}

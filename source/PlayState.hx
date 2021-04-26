@@ -79,11 +79,9 @@ class PlayState extends FlxState
 		}
 
 		_hud.setScore(Registry.score);
-		var timeElapsed:Float = Date.now().getTime() / 1000 - timeStart;
-		_hud.setTimeLeft(Registry.TIME_LIMIT - timeElapsed);
-		if (timeElapsed > Registry.TIME_LIMIT)
+		if (Registry.TIME_ON)
 		{
-			FlxG.switchState(new EndState());
+			updateTime();
 		}
 
 		if (FlxG.keys.justPressed.R)
@@ -98,6 +96,16 @@ class PlayState extends FlxState
 		}
 
 		super.update(elapsed);
+	}
+
+	public function updateTime()
+	{
+		var timeElapsed:Float = Date.now().getTime() / 1000 - timeStart;
+		_hud.setTimeLeft(Registry.TIME_LIMIT - timeElapsed);
+		if (timeElapsed > Registry.TIME_LIMIT)
+		{
+			FlxG.switchState(new EndState());
+		}
 	}
 
 	public function incrementActiveId()
