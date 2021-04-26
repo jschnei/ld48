@@ -11,7 +11,7 @@ import flixel.util.FlxColor;
 
 class TitleState extends FlxState
 {
-	private static var TITLE = "Mine!";
+	private static var TITLE = "Match! Drop! Match!";
 
 	private var _background:FlxSprite;
 	private var _titleText:FlxText;
@@ -27,12 +27,12 @@ class TitleState extends FlxState
 
 		addBackground();
 
-		_titleText = new FlxText(0, 200, Registry.WINDOW_WIDTH, TITLE);
-		_titleText.setFormat(Registry.fontSource, 48, FlxColor.WHITE, FlxTextAlign.CENTER);
+		_titleText = new FlxText(0, 180, Registry.WINDOW_WIDTH, TITLE);
+		_titleText.setFormat(Registry.fontSource, 40, FlxColor.WHITE, FlxTextAlign.CENTER);
 		add(_titleText);
 
-		var insString = "The objective is to mine for treasure!\n\nDrag your mouse along three tiles with the first and last matching.\n\n\n\nThe middle tile will drop to the next board, and the first and last tile will change color.\n\nUse UP/DOWN, W/S, or the scroll wheel to move between boards.\n\nAs you go deeper, there's better treasure to be found and more points to be gained!";
-		_insText = new FlxText(0, 280, Registry.WINDOW_WIDTH, insString);
+		var insString = "Match tiles to go deeper and find treasure!\n\nTo make a match, drag your mouse along three tiles with the first and last matching.\n\nMatch examples: \n\n\n\nWhen you make a match, the middle tile will drop down to the next board, and the first and last tiles will change color.\n\nUse UP/DOWN, W/S, or the scroll wheel to move between boards.\n\nAs you go deeper, you'll find better treasure and get many more points for making matches!";
+		_insText = new FlxText(0, 240, Registry.WINDOW_WIDTH, insString);
 		_insText.setFormat(Registry.fontSource, 16, FlxColor.WHITE, FlxTextAlign.CENTER);
 		add(_insText);
 

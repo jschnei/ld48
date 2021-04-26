@@ -57,8 +57,10 @@ class HUD extends FlxSpriteGroup
 
     public function fadeIn(duration:Float) {
         _scoreText.alpha = 0;
-        _timer.alpha = 0;
         FlxTween.tween(_scoreText, {alpha: 1}, duration);
-        FlxTween.tween(_timer, {alpha: 1}, duration);
+        if (Registry.TIME_ON) {
+            _timer.alpha = 0;
+            FlxTween.tween(_timer, {alpha: 1}, duration);
+        }
     }
 }
