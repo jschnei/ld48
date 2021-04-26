@@ -33,10 +33,30 @@ class Registry
 
 	// public static var SUBMIT_SCORE_URL:String = "http://localhost:5000/submit_score";
 	public static var SUBMIT_SCORE_URL:String = "http://slime.jschnei.com:7048/submit_score";
+	public static var TRANSCRIPT_ALPHABET:String = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijlkmnopqrstuvwxyz0123456789";
 
 	public static var score:Int = 0;
 	public static var name:String = "Anonymous";
 	public static var randomSeed:Int = 0;
+	public static var transcript:Array<Int>;
+	public static var gameMode:GameMode;
+
+	public static function encodeTranscript():String
+	{
+		return transcript.map(function(x:Int)
+		{
+			return TRANSCRIPT_ALPHABET.charAt(x);
+		}).join("");
+	}
+
+	public static function encodeGameMode():String
+	{
+		if (gameMode == ARCADE)
+			return "arcade";
+		if (gameMode == UNTIMED)
+			return "untimed";
+		return "unknown";
+	}
 
 	public static var accessible:Bool = false;
 
@@ -56,5 +76,7 @@ class Registry
 			TIME_ON = false;
 			REGENERATE_TILES = false;
 		}
+
+		gameMode = mode;
 	}
 }

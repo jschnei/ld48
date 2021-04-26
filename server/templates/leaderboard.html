@@ -5,8 +5,18 @@
 
 <h1>Leaderboard</h1>
 
+<h2>Classic Mode</h2>
+
 <ol>
-    {% for name, score in high_scores %}
+    {% for name, score in high_scores_classic %}
+        <li>{{name}} (<b>{{score}}</b>)</li>
+    {% endfor %}
+</ol>
+
+<h2>Untimed Mode</h2>
+
+<ol>
+    {% for name, score in high_scores_untimed %}
         <li>{{name}} (<b>{{score}}</b>)</li>
     {% endfor %}
 </ol>

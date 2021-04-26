@@ -24,6 +24,8 @@ class Game
 		Registry.randomSeed = Std.int(Date.now().getTime() / 1000);
 		rand = new FlxRandom(Registry.randomSeed);
 
+		Registry.transcript = new Array<Int>();
+
 		this.width = width;
 		this.height = height;
 
@@ -114,6 +116,13 @@ class Game
 		// passed checks
 		var points = Std.int(Math.pow(3, gridId));
 		Registry.score += points;
+
+		for (square in squares)
+		{
+			Registry.transcript.push(square);
+		}
+		Registry.transcript.push(gridId);
+
 		curGrid.attachedGrid.displayPointsPopup(moveTile, points);
 		var deletedTile = curGrid.tiles[moveTile];
 

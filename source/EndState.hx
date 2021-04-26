@@ -18,14 +18,14 @@ class EndState extends FlxState
 	private var _submitButton:FlxText;
 	private var _submitted:Bool = false;
 	private var _playAgainButton:FlxText;
-    private var _background:FlxSprite;
+	private var _background:FlxSprite;
 
 	override public function create()
 	{
 		super.create();
-        
-        addBackground();
-        
+
+		addBackground();
+
 		_scoreText = new FlxText(0, 120, Registry.WINDOW_WIDTH);
 		_scoreText.setFormat(Registry.fontSource, 24, FlxColor.WHITE, FlxTextAlign.CENTER);
 		_scoreText.text = "You scored " + Registry.score + " points!";
@@ -84,6 +84,9 @@ class EndState extends FlxState
 		var req = new haxe.Http(Registry.SUBMIT_SCORE_URL);
 		req.setParameter("name", _nameInput.text);
 		req.setParameter("score", Std.string(Registry.score));
+		req.setParameter("gamemode", Registry.encodeGameMode());
+		req.setParameter("transcript", Registry.encodeTranscript());
+		req.setParameter("seed", Std.string(Registry.randomSeed));
 		req.onError = function(msg:String)
 		{
 			trace("Submit Score Error:", msg);
@@ -91,13 +94,13 @@ class EndState extends FlxState
 		req.request(true);
 	}
 
-    private function addBackground():Void
-    {
-        _background = new FlxSprite();
-        _background.loadGraphic(AssetPaths.endscreen__png, true, Registry.WINDOW_WIDTH, Registry.WINDOW_HEIGHT);
-        var flicker = "flicker";
-        _background.animation.add(flicker, [0, 1], 1, true);
-        _background.animation.play(flicker);
-        add(_background);
-    }
+	private function addBackground():Void
+	{
+		_background = new FlxSprite();
+		_background.loadGraphic(AssetPaths.endscreen__png, true, Registry.WINDOW_WIDTH, Registry.WINDOW_HEIGHT);
+		var flicker = "flicker";
+		_background.animation.add(flicker, [0, 1], 1, true);
+		_background.animation.play(flicker);
+		add(_background);
+	}
 }
