@@ -32,7 +32,7 @@ class Registry
 	public static var TIME_LIMIT:Float = 120;
 
 	// public static var SUBMIT_SCORE_URL:String = "http://localhost:5000/submit_score";
-	public static var SUBMIT_SCORE_URL:String = "http://slime.jschnei.com:7048/submit_score";
+	public static var SUBMIT_SCORE_URL:String = "https://slime.jschnei.com/submit_score";
 	public static var TRANSCRIPT_ALPHABET:String = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijlkmnopqrstuvwxyz0123456789";
 
 	public static var score:Int = 0;
