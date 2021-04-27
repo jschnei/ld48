@@ -2,7 +2,7 @@
 Description=LD48 Leaderboard Server
 
 [Service]
-ExecStart=/usr/local/bin/gunicorn --bind 0.0.0.0:7048 app:app
+ExecStart=/usr/local/bin/gunicorn --bind unix:leaderboard.sock -m 007 app:app
 
 WorkingDirectory=/srv/ld48/server
 
