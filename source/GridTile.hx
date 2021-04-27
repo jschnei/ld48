@@ -119,10 +119,12 @@ class GridTile extends FlxSpriteGroup
 		if (Registry.accessible)
 		{
 			_tileSprite.loadGraphic(accessibleTiles[colorId], false, Grid.CELL_WIDTH, Grid.CELL_HEIGHT);
+            _nextTileSprite.loadGraphic(accessibleTiles[colorId], false, Grid.CELL_WIDTH, Grid.CELL_HEIGHT);
 		}
 		else
 		{
 			_tileSprite.loadGraphic(tileColors[colorId], false, Grid.CELL_WIDTH, Grid.CELL_HEIGHT);
+            _nextTileSprite.loadGraphic(tileColors[colorId], false, Grid.CELL_WIDTH, Grid.CELL_HEIGHT);
 		}
 	}
 }
