@@ -2,7 +2,7 @@
 Description=LD48 Leaderboard Server
 
 [Service]
-ExecStart=/usr/local/bin/gunicorn --certfile=/etc/letsencrypt/live/slime.jschnei.com/server.crt --keyfile=/etc/letsencrypt/live/slime.jschnei.com/server.key --bind 0.0.0.0:443 app:app
+ExecStart=/usr/local/bin/gunicorn --certfile=/etc/letsencrypt/live/slime.jschnei.com/fullchain.pem --keyfile=/etc/letsencrypt/live/slime.jschnei.com/privkey.pem --bind 0.0.0.0:443 app:app
 
 WorkingDirectory=/srv/ld48/server
 
